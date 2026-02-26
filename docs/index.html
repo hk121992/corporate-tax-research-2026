@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Tax Research 2026 — Total Tax Contribution Analysis | Australia</title>
+  <meta name="description" content="Research tool visualising the total economic tax contribution of Australia's largest corporations, including corporate income tax, payroll tax, employee income tax, Medicare levy and GST.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================================================================
+     HEADER / HERO
+     =================================================================== -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="header-badge">Research Tool · Australia · FY 2023–24</div>
+
+      <h1>Beyond Corporate Tax:<br>The Total Economic Tax Contribution</h1>
+
+      <p class="header-subtitle">
+        When a company employs thousands of people, it generates far more tax revenue than
+        its corporate income tax bill alone suggests. This tool quantifies the
+        <strong style="color:#fff">total tax contribution</strong> — combining corporate income tax,
+        employer payroll tax, employee income tax withheld, Medicare levy, and GST from employee spending —
+        across Australia's largest companies. As AI-era companies generate high profits with fewer
+        employees, understanding this gap becomes increasingly important for tax policy.
+      </p>
+
+      <div class="header-stats">
+        <div class="stat-pill">
+          <span class="stat-value" id="agg-companies">—</span>
+          <span class="stat-label">Companies analysed</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value" id="agg-employees">—</span>
+          <span class="stat-label">Total AU employees</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value" id="agg-corp-tax">—</span>
+          <span class="stat-label">Corporate income tax</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value" id="agg-ttc">—</span>
+          <span class="stat-label">Total tax contribution (core est.)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================================================================
+     METHODOLOGY BANNER
+     =================================================================== -->
+<div class="methodology-banner">
+  <div class="container">
+    <button class="methodology-toggle" id="meth-toggle" aria-expanded="false">
+      <span>
+        ℹ️ &nbsp;Methodology &amp; Data Sources — click to expand
+      </span>
+      <span class="toggle-icon">▼</span>
+    </button>
+  </div>
+
+  <div id="meth-content" class="methodology-content">
+    <p style="font-size:0.85rem;color:#4a4a6a;margin-bottom:1rem;max-width:780px">
+      This analysis uses the <strong>PwC Total Tax Contribution (TTC) Framework</strong> (2005–present),
+      distinguishing <em>Taxes Borne</em> (paid directly by the company) from <em>Taxes Collected</em>
+      (collected by the company on behalf of government). Corporate income tax figures are sourced from
+      the <strong>ATO Corporate Tax Transparency dataset</strong> (actual reported values). All other
+      figures are modelled estimates clearly marked as such.
+    </p>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <h4>🏢 Corporate Income Tax</h4>
+        <p>Source: ATO Corporate Tax Transparency Report 2023–24.<br>
+        Entities with total income ≥ $100M. Where ATO data is not yet matched, annual report estimates are used and flagged.</p>
+        <p><strong>Type:</strong> Taxes Borne — actual</p>
+      </div>
+
+      <div class="method-card">
+        <h4>🏦 Employer Payroll Tax</h4>
+        <p>State payroll tax on wages above state-specific thresholds. Rates: NSW 5.45%, VIC 4.85%, QLD 4.75%, WA 5.50%, SA 4.95%.</p>
+        <code>max(0, state_wages − threshold) × rate</code>
+        <p style="margin-top:0.5rem"><strong>Type:</strong> Taxes Borne — estimated</p>
+      </div>
+
+      <div class="method-card">
+        <h4>💼 Employee Income Tax (5-Quintile Model)</h4>
+        <p>Uses a <strong>5-quintile salary distribution</strong> per industry (ABS EEH Survey 2023–24),
+        not just the median. This corrects for Jensen's inequality: using only the median understates
+        income tax by ~19–26% in high-dispersion industries (mining, finance).</p>
+        <code>E[tax(salary)] = Σ 0.2 × tax(salary_q)</code>
+        <p style="margin-top:0.5rem"><strong>Type:</strong> Taxes Collected — estimated</p>
+      </div>
+
+      <div class="method-card">
+        <h4>🏥 Medicare Levy</h4>
+        <p>2% of gross salary. Applied across the same quintile distribution as income tax. Low-income threshold applies for the lowest quintile earners.</p>
+        <code>medicare = salary × 0.02</code>
+        <p style="margin-top:0.5rem"><strong>Type:</strong> Taxes Collected — estimated</p>
+      </div>
+
+      <div class="method-card">
+        <h4>🛒 GST from Employee Spending</h4>
+        <p>Based on ABS Household Expenditure Survey 2021–22. GST covers ~47% of Australian household
+        consumption nationally, but varies by income band: higher earners spend proportionally more on
+        GST-exempt categories (private health, overseas travel, financial services).</p>
+        <code>after_tax × consumption_rate × gst_coverage × (10/110)</code>
+        <p style="margin-top:0.5rem"><strong>Type:</strong> Taxes Collected — estimated</p>
+      </div>
+
+      <div class="method-card">
+        <h4>⚠️ Land Tax (optional)</h4>
+        <p>Rough estimate of residential land tax paid by employee homeowners.
+        <em>Disabled by default</em> — enable via the toggle. Highly variable by location and individual circumstances. Treat as indicative only.</p>
+        <code>employees × homeownership_rate × median_land_value × rate</code>
+        <p style="margin-top:0.5rem"><strong>Type:</strong> Taxes Borne — rough estimate</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.75rem;color:#7a7a8a;margin-top:1rem;max-width:780px">
+      <strong>Disclaimer:</strong> Estimates are illustrative. Payroll tax, income tax, GST and land tax
+      figures are modelled from published industry and survey data. They are not actual tax liabilities.
+      Superannuation contributions (11.5% of OTE) are a significant employer cost but are not a tax and
+      are excluded from all totals.
+    </p>
+  </div>
+</div>
+
+<!-- ===================================================================
+     CONTROLS PANEL (sticky)
+     =================================================================== -->
+<div class="controls-section">
+  <div class="controls-inner">
+
+    <!-- Tax component toggles -->
+    <div class="controls-group">
+      <div class="controls-group-label">Tax Components</div>
+      <div class="toggle-grid" id="toggle-grid">
+        <!-- Rendered by JS -->
+        <label class="tax-toggle">
+          <input type="checkbox" data-component="corporate_income_tax" checked>
+          <span class="toggle-swatch" style="background:#1a3a5c;border-color:#1a3a5c"></span>
+          <span class="toggle-label">Corporate income tax <span class="actual-tag">ATO actual</span></span>
+        </label>
+        <label class="tax-toggle">
+          <input type="checkbox" data-component="employer_payroll_tax" checked>
+          <span class="toggle-swatch" style="background:#2e6da4;border-color:#2e6da4"></span>
+          <span class="toggle-label">Employer payroll tax <span class="est-tag">est.</span></span>
+        </label>
+        <label class="tax-toggle">
+          <input type="checkbox" data-component="employee_income_tax_withheld" checked>
+          <span class="toggle-swatch" style="background:#4a9fd4;border-color:#4a9fd4"></span>
+          <span class="toggle-label">Employee income tax <span class="est-tag">est.</span></span>
+        </label>
+        <label class="tax-toggle">
+          <input type="checkbox" data-component="employee_medicare_levy" checked>
+          <span class="toggle-swatch" style="background:#3a9a5c;border-color:#3a9a5c"></span>
+          <span class="toggle-label">Medicare levy <span class="est-tag">est.</span></span>
+        </label>
+        <label class="tax-toggle">
+          <input type="checkbox" data-component="employee_gst_spending_estimate" checked>
+          <span class="toggle-swatch" style="background:#d4880e;border-color:#d4880e"></span>
+          <span class="toggle-label">GST from spending <span class="est-tag">est.</span></span>
+        </label>
+        <label class="tax-toggle"
+          data-tooltip="Rough estimate — highly variable. See methodology.">
+          <input type="checkbox" data-component="land_tax_estimate">
+          <span class="toggle-swatch" style="background:#c0392b;border-color:#c0392b"></span>
+          <span class="toggle-label">Land tax <span class="est-tag">rough est.</span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Sector filter -->
+    <div class="controls-group">
+      <div class="controls-group-label">Sector Filter</div>
+      <select class="controls-select" id="filter-sector">
+        <option value="all">All sectors</option>
+        <option value="mining">Mining &amp; Resources</option>
+        <option value="banking">Finance &amp; Banking</option>
+        <option value="retail">Retail Trade</option>
+        <option value="tech">Tech &amp; Media</option>
+        <option value="healthcare">Healthcare</option>
+        <option value="energy">Energy &amp; Utilities</option>
+        <option value="construction">Construction</option>
+        <option value="transport">Transport</option>
+      </select>
+
+      <div class="controls-group-label" style="margin-top:0.75rem">Sort By</div>
+      <select class="controls-select" id="sort-by">
+        <option value="total_ttc">Total TTC (largest first)</option>
+        <option value="corp_tax">Corporate tax</option>
+        <option value="employees">Employees (AU)</option>
+        <option value="multiplier">Employment multiplier</option>
+        <option value="rev_per_emp">Revenue per employee</option>
+        <option value="revenue">Total revenue</option>
+      </select>
+    </div>
+
+    <!-- View options -->
+    <div class="controls-group">
+      <div class="controls-group-label">Bar Chart View</div>
+      <div class="view-toggle-group">
+        <button class="view-btn active" data-view="total">Total ($)</button>
+        <button class="view-btn" data-view="per_employee">Per Employee</button>
+      </div>
+
+      <div class="controls-group-label" style="margin-top:0.75rem">Show Top N Companies</div>
+      <div class="slider-row">
+        <input class="controls-slider" type="range" id="top-n-slider" min="5" max="49" value="20">
+        <span class="slider-value" id="top-n-label">20</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     MAIN CONTENT
+     =================================================================== -->
+<main class="main-content" id="main-content">
+  <div class="container">
+
+    <!-- KEY INSIGHTS -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div>
+          <h2>Key Findings</h2>
+          <p class="section-desc">Summary metrics across filtered companies with current toggle settings.</p>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight-card highlight">
+          <div class="insight-value" id="insight-corp-tax">—</div>
+          <div class="insight-label">Total corporate income tax<br><small>ATO-reported / estimated</small></div>
+        </div>
+        <div class="insight-card highlight">
+          <div class="insight-value" id="insight-total-ttc">—</div>
+          <div class="insight-label">Total tax contribution (active toggles)<br><small>Taxes borne + taxes collected</small></div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-value" id="insight-multiplier">—</div>
+          <div class="insight-label">Average employment tax multiplier<br><small>Total TTC ÷ corporate tax alone</small></div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-value" id="insight-employees">—</div>
+          <div class="insight-label">Total Australian employees<br><small>Across all filtered companies</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHART 1: STACKED BAR -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div>
+          <h2>Total Tax Contribution by Company</h2>
+          <p class="section-desc">
+            Stacked bars show each tax component. Toggle components on/off to see their contribution.
+            Switch to "Per Employee" view to normalise for company size.
+          </p>
+        </div>
+        <button class="method-btn" data-method-toggle="method-bar">Show methodology ▼</button>
+      </div>
+      <div id="method-bar" class="section-method">
+        <strong>Taxes Borne</strong> (dark colours, company pays directly): corporate income tax (ATO actual),
+        employer payroll tax (estimated per state).<br>
+        <strong>Taxes Collected</strong> (lighter colours, company withholds on behalf of government):
+        employee income tax PAYG withholding, Medicare levy, and estimated GST from employees' consumer spending.<br>
+        <strong>Per Employee view</strong> divides each value by the company's Australian headcount — useful
+        for comparing tax intensity independent of company size.
+      </div>
+      <div class="chart-body">
+        <div class="chart-container chart-container-bar">
+          <canvas id="chart-bar"></canvas>
+        </div>
+      </div>
+      <div class="chart-legend" id="chart-legend"></div>
+    </div>
+
+    <!-- CHART 2: EMPLOYMENT MULTIPLIER SCATTER -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div>
+          <h2>Employment Tax Multiplier</h2>
+          <p class="section-desc">
+            Each bubble is one company. X-axis: Australian employee count (log scale).
+            Y-axis: Total TTC ÷ corporate income tax alone.
+            Bubble size reflects total revenue. Colour indicates industry.
+          </p>
+        </div>
+        <button class="method-btn" data-method-toggle="method-scatter">Show methodology ▼</button>
+      </div>
+      <div id="method-scatter" class="section-method">
+        <strong>Employment Tax Multiplier</strong> = Total Tax Contribution / Corporate Income Tax alone.<br>
+        A multiplier of 2× means the company generates twice as much total tax as its corporate tax bill suggests.
+        High-employment companies (retail, services) typically have multipliers of 3–9×.
+        Low-employment, high-profit companies (mining giants, REITs, AI-era tech) cluster near 1.1–1.3×.<br>
+        <strong>This is the core finding</strong>: as AI drives revenue/employee higher, the effective total
+        tax rate (as a proportion of economic output) falls unless tax policy adapts.
+      </div>
+      <div class="chart-body">
+        <div class="chart-container chart-container-scatter">
+          <canvas id="chart-scatter"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHART 3: REVENUE PER EMPLOYEE vs CORP TAX SHARE -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div>
+          <h2>AI-Era Signal: Revenue per Employee vs Corporate Tax Dominance</h2>
+          <p class="section-desc">
+            As revenue per employee rises (moving right), corporate tax becomes a larger fraction of
+            the total tax contribution — meaning less tax is generated through employment activity.
+            Bubble size reflects AU employee count.
+          </p>
+        </div>
+        <button class="method-btn" data-method-toggle="method-wedge">Show methodology ▼</button>
+      </div>
+      <div id="method-wedge" class="section-method">
+        <strong>X-axis</strong>: Total revenue ÷ Australian employees (log scale). A useful proxy for
+        "AI-era intensity" — companies moving toward AI-driven operations will shift right over time.<br>
+        <strong>Y-axis</strong>: Corporate income tax as a percentage of total tax contribution (with active toggles).<br>
+        <strong>Interpretation</strong>: A company in the top-right corner (high revenue/employee, high corp tax %)
+        generates most of its tax revenue through corporate tax alone — employment generates little additional
+        tax. This is the structural vulnerability in current tax systems as AI scales.
+      </div>
+      <div class="chart-body">
+        <div class="chart-container chart-container-wedge">
+          <canvas id="chart-wedge"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA TABLE -->
+    <div class="table-section">
+      <div class="table-header-row">
+        <div>
+          <h2 style="font-size:1.05rem;color:var(--navy)">Company Data Table</h2>
+          <p class="section-desc" style="margin:0.2rem 0 0">
+            Click column headers to sort. All monetary values reflect active tax component toggles.
+          </p>
+        </div>
+        <div class="table-actions">
+          <button class="btn btn-outline" id="download-csv">⬇ Download CSV</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table" aria-label="Company tax data">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th class="num" data-sort="employees">Employees (AU) <span class="sort-arrow">⇅</span></th>
+              <th class="num" data-sort="revenue">Revenue <span class="sort-arrow">⇅</span></th>
+              <th class="num" data-sort="corp_tax">
+                Corp Tax
+                <span class="sort-arrow">⇅</span>
+              </th>
+              <th class="num"
+                data-tooltip="Estimated employer payroll tax&#10;(state rates × wages above threshold)">
+                Payroll Tax <small>(est.)</small>
+              </th>
+              <th class="num"
+                data-tooltip="Estimated employee income tax&#10;withheld + Medicare levy">
+                Income Tax + Medicare <small>(est.)</small>
+              </th>
+              <th class="num"
+                data-tooltip="Estimated GST from employee&#10;consumer spending (ABS HES)">
+                GST <small>(est.)</small>
+              </th>
+              <th class="num" data-sort="total_ttc">Total TTC <span class="sort-arrow">▼</span></th>
+              <th class="multiplier-cell" data-sort="multiplier">
+                Multiplier <span class="sort-arrow">⇅</span>
+              </th>
+              <th class="num" data-sort="rev_per_emp">Rev/Employee <span class="sort-arrow">⇅</span></th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr><td colspan="10" style="text-align:center;padding:2rem;color:#aaa">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</main>
+
+<!-- ===================================================================
+     FOOTER
+     =================================================================== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <h3>Data Sources &amp; References</h3>
+    <ul class="sources-list">
+      <li>ATO Corporate Tax Transparency Report 2023–24 —
+        <a href="https://www.ato.gov.au/businesses-and-organisations/corporate-tax-measures-and-assurance/large-business/corporate-tax-transparency" target="_blank" rel="noopener">ato.gov.au</a>
+      </li>
+      <li>ABS Employee Earnings, Hours and Leave Survey (EEH) 2023–24 —
+        <a href="https://www.abs.gov.au/statistics/labour/earnings-and-work-hours/employee-earnings-hours-and-leave-australia" target="_blank" rel="noopener">abs.gov.au</a>
+      </li>
+      <li>ABS Household Expenditure Survey 2021–22 (GST consumption rates) —
+        <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results" target="_blank" rel="noopener">abs.gov.au</a>
+      </li>
+      <li>State Revenue Offices: payroll tax rates and thresholds —
+        <a href="https://www.payrolltax.gov.au/resources" target="_blank" rel="noopener">payrolltax.gov.au</a>
+      </li>
+      <li>PwC Total Tax Contribution (TTC) Framework (2005–present) —
+        <a href="https://www.pwc.com/gx/en/services/tax/publications/total-tax-contribution-framework.html" target="_blank" rel="noopener">pwc.com</a>
+      </li>
+      <li>OECD Taxing Wages 2025 (tax wedge methodology) —
+        <a href="https://www.oecd.org/tax/taxing-wages-20725124.htm" target="_blank" rel="noopener">oecd.org</a>
+      </li>
+      <li>Company financial data from publicly available annual reports (FY2024 / FY2023–24)</li>
+    </ul>
+
+    <div class="footer-disclaimer">
+      <strong>Disclaimer:</strong> This is a research and visualisation tool.
+      All estimated tax figures (payroll tax, employee income tax, Medicare levy, GST, land tax)
+      are modelled estimates based on published industry benchmarks and survey data, not actual tax
+      liabilities. Corporate income tax figures are sourced from the ATO Corporate Tax Transparency
+      dataset where available; otherwise estimated from annual reports. Employee counts are from
+      company annual reports (FY2024) and may not match ATO reporting periods exactly.
+      Superannuation contributions are excluded from all tax totals as they are deferred compensation,
+      not taxes. Financial figures are denominated in Australian Dollars (AUD).
+      <br><br>
+      Source code: <a href="https://github.com/hk121992/corporate-tax-research-2026" style="color:rgba(100,160,220,0.7)" target="_blank" rel="noopener">github.com/hk121992/corporate-tax-research-2026</a>
+      &nbsp;·&nbsp; Data year: FY 2023–24
+      &nbsp;·&nbsp; Generated: <span id="generated-date"></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================================================================
+     SCRIPTS
+     =================================================================== -->
+<!-- Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<!-- Embedded dataset (generated by build_dataset.py) -->
+<script src="dataset_2023_24.js"></script>
+<!-- App logic -->
+<script src="app.js"></script>
+
+<script>
+  // Set generated date from embedded dataset metadata
+  document.addEventListener("DOMContentLoaded", () => {
+    const datasets = window.__DATASETS__ || {};
+    const d = datasets["australia_2023-24"];
+    const el = document.getElementById("generated-date");
+    if (el && d?.meta?.generated) {
+      el.textContent = d.meta.generated.substring(0, 10);
+    }
+  });
+</script>
+
+</body>
+</html>
