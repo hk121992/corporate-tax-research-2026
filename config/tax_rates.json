@@ -1,0 +1,79 @@
+{
+  "australia": {
+    "year": "2023-24",
+    "notes": "All rates sourced from ATO and state revenue offices. Effective 2024-25 financial year.",
+    "corporate_tax_rate": 0.30,
+    "corporate_tax_rate_small": 0.25,
+    "corporate_tax_rate_small_threshold": 50000000,
+    "income_tax_brackets": [
+      {"min": 0,      "max": 18200,  "rate": 0.00, "base": 0,     "note": "Tax-free threshold"},
+      {"min": 18201,  "max": 45000,  "rate": 0.16, "base": 0,     "note": "Stage 3 rate from 2024-25"},
+      {"min": 45001,  "max": 135000, "rate": 0.30, "base": 4288,  "note": "Stage 3 rate from 2024-25"},
+      {"min": 135001, "max": 190000, "rate": 0.37, "base": 31288, "note": ""},
+      {"min": 190001, "max": null,   "rate": 0.45, "base": 51638, "note": ""}
+    ],
+    "medicare_levy_rate": 0.02,
+    "medicare_levy_low_income_threshold": 26000,
+    "superannuation_rate": 0.115,
+    "superannuation_rate_notes": "11.5% from 1 July 2024; rises to 12% from 1 July 2025. Taxed at 15% concessional rate within super fund. Mandatory employer cost but not classified as a tax.",
+    "payroll_tax_by_state": {
+      "NSW": {
+        "rate": 0.0545,
+        "annual_threshold": 1200000,
+        "source": "Revenue NSW 2024-25"
+      },
+      "VIC": {
+        "rate": 0.0485,
+        "annual_threshold": 700000,
+        "regional_rate": 0.012125,
+        "source": "State Revenue Office VIC 2024-25"
+      },
+      "QLD": {
+        "rate": 0.0475,
+        "annual_threshold": 1300000,
+        "source": "Queensland Revenue Office 2024-25"
+      },
+      "WA": {
+        "rate": 0.055,
+        "annual_threshold": 1000000,
+        "source": "Revenue WA 2024-25"
+      },
+      "SA": {
+        "rate": 0.0495,
+        "annual_threshold": 1500000,
+        "source": "Revenue SA 2024-25"
+      },
+      "ACT": {
+        "rate": 0.0685,
+        "annual_threshold": 2000000,
+        "source": "ACT Revenue Office 2024-25"
+      },
+      "NT": {
+        "rate": 0.055,
+        "annual_threshold": 2500000,
+        "source": "Territory Revenue Office 2024-25"
+      },
+      "TAS": {
+        "rate": 0.04,
+        "annual_threshold": 1250000,
+        "source": "State Revenue Office TAS 2024-25"
+      }
+    },
+    "gst_rate": 0.10,
+    "gst_national_coverage_rate": 0.47,
+    "gst_national_coverage_notes": "ATO statistics: GST applies to approximately 47% of household consumption. Food, health, education, childcare, and financial services are exempt.",
+    "land_tax": {
+      "notes": "Rough estimate only. Highly variable by state, land value, and ownership type. Enabled separately in the UI and flagged as a rough estimate.",
+      "effective_rate_residential": 0.005,
+      "effective_rate_commercial": 0.008,
+      "homeownership_rate_by_income_band": {
+        "low":      0.45,
+        "low_mid":  0.52,
+        "mid":      0.60,
+        "mid_high": 0.68,
+        "high":     0.75
+      },
+      "median_residential_land_value_aud": 600000
+    }
+  }
+}

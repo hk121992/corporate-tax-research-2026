@@ -1,0 +1,145 @@
+{
+  "_notes": "Industry salary benchmarks sourced from ABS Employee Earnings, Hours and Leave Survey (EEH) 2023-24 and ABS Labour Force Survey. Weekly median earnings multiplied by 52. Quintile distributions are estimated from the ABS earnings percentile data where available; otherwise interpolated from known P25/P50/P75 values assuming a lognormal distribution. All figures are approximate.",
+  "_quintile_note": "salary_quintiles = [Q1_mean, Q2_mean, Q3_mean(≈median), Q4_mean, Q5_mean]. Each quintile represents 20% of employees. Weighting each at 0.20 gives an unbiased estimate of E[tax(salary)] rather than tax(E[salary]), correcting for the convexity of progressive tax brackets (Jensen's inequality).",
+  "_oecd_tax_wedge_note": "For context: Australia's OECD average tax wedge on labour (employee + employer taxes / gross labour cost) is approximately 28-30% for an average wage worker, compared to OECD average of ~35%.",
+
+  "Mining": {
+    "abs_anzsic": "B",
+    "median_weekly_earnings": 2761,
+    "median_annual": 143572,
+    "income_band": "high",
+    "salary_quintiles": [72000, 104000, 143572, 205000, 315000],
+    "quintile_source": "ABS EEH 2023-24 Cat. 6306.0, estimated quintile midpoints from P25/P50/P75 data",
+    "notes": "Highest-paid industry in Australia. Wide distribution: mine operators, drivers and trades at lower quintiles; engineers, managers and executives at upper quintiles. FIFO loadings push median up significantly."
+  },
+
+  "Finance and Insurance Services": {
+    "abs_anzsic": "K",
+    "median_weekly_earnings": 2000,
+    "median_annual": 104000,
+    "income_band": "high",
+    "salary_quintiles": [52000, 75000, 104000, 162000, 285000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Very wide salary distribution. Bank tellers and customer service in Q1-Q2; analysts, advisers in Q3; senior bankers, fund managers in Q4-Q5. Large Q5 reflects executive remuneration especially at major banks and Macquarie."
+  },
+
+  "Electricity, Gas, Water and Waste Services": {
+    "abs_anzsic": "D",
+    "median_weekly_earnings": 2000,
+    "median_annual": 104000,
+    "income_band": "high",
+    "salary_quintiles": [58000, 78000, 104000, 142000, 218000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Relatively compressed distribution compared to finance. High union coverage in utility workers; significant technical and engineering workforce."
+  },
+
+  "Construction": {
+    "abs_anzsic": "E",
+    "median_weekly_earnings": 1850,
+    "median_annual": 96200,
+    "income_band": "mid_high",
+    "salary_quintiles": [50000, 70000, 96200, 132000, 205000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Includes many subcontractors and owner-operators (not captured in wage data). Wide range from labourers to project managers and directors."
+  },
+
+  "Professional, Scientific and Technical Services": {
+    "abs_anzsic": "M",
+    "median_weekly_earnings": 1700,
+    "median_annual": 88400,
+    "income_band": "mid_high",
+    "salary_quintiles": [48000, 65000, 88400, 122000, 198000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Covers legal, accounting, engineering, IT consulting and scientific research. Graduate-heavy workforce with significant upper-tail dispersion from partners and principals."
+  },
+
+  "Information Media and Telecommunications": {
+    "abs_anzsic": "J",
+    "median_weekly_earnings": 1600,
+    "median_annual": 83200,
+    "income_band": "mid_high",
+    "salary_quintiles": [45000, 62000, 83200, 116000, 195000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Tech companies (software, fintech) at higher quintiles; media, content and customer service roles at lower quintiles. Significant equity compensation at listed tech firms not captured in wage data."
+  },
+
+  "Health Care and Social Assistance": {
+    "abs_anzsic": "Q",
+    "median_weekly_earnings": 1450,
+    "median_annual": 75400,
+    "income_band": "mid",
+    "salary_quintiles": [44000, 57000, 75400, 97000, 145000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Large workforce, moderate salary dispersion. Aged care and disability support workers at Q1; nurses, allied health at Q2-Q3; specialists and radiologists at Q4-Q5. Many part-time workers inflate employee count relative to FTE."
+  },
+
+  "Education and Training": {
+    "abs_anzsic": "P",
+    "median_weekly_earnings": 1406,
+    "median_annual": 73100,
+    "income_band": "mid",
+    "salary_quintiles": [38000, 56000, 73100, 92000, 130000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Relatively compressed distribution due to public sector award rates. Many casual and part-time academics at lower quintiles; full professors and principals at upper end."
+  },
+
+  "Transport, Postal and Warehousing": {
+    "abs_anzsic": "I",
+    "median_weekly_earnings": 1406,
+    "median_annual": 73100,
+    "income_band": "mid",
+    "salary_quintiles": [40000, 54000, 73100, 94000, 135000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Covers truck drivers, warehouse workers, airline staff, postal workers and logistics management. Qantas aviation crews and Australia Post include significant shift and penalty loadings."
+  },
+
+  "Wholesale Trade": {
+    "abs_anzsic": "F",
+    "median_weekly_earnings": 1500,
+    "median_annual": 78000,
+    "income_band": "mid",
+    "salary_quintiles": [42000, 58000, 78000, 105000, 165000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Warehouse and sales roles at lower quintiles; account managers and category buyers at mid; directors and owners at upper quintiles."
+  },
+
+  "Retail Trade": {
+    "abs_anzsic": "G",
+    "median_weekly_earnings": 900,
+    "median_annual": 46800,
+    "income_band": "low_mid",
+    "salary_quintiles": [22000, 35000, 46800, 60000, 85000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Large casual and part-time workforce significantly depresses the median. Full-time store managers and buyers sit at Q3-Q4. Q1 represents many part-time retail assistants. Woolworths and Coles employ at scale in this range."
+  },
+
+  "Accommodation and Food Services": {
+    "abs_anzsic": "H",
+    "median_weekly_earnings": 700,
+    "median_annual": 36400,
+    "income_band": "low",
+    "salary_quintiles": [19000, 27500, 36400, 48000, 70000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Lowest-paid industry. Large proportion of casual, part-time and junior workers. Reflects seasonal tourism employment. Many workers at or near minimum wage."
+  },
+
+  "Arts and Recreation Services": {
+    "abs_anzsic": "R",
+    "median_weekly_earnings": 1150,
+    "median_annual": 59800,
+    "income_band": "low_mid",
+    "salary_quintiles": [28000, 42000, 59800, 80000, 125000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Wide variation: casual venue staff at lower quintiles; performers, technicians and facility managers in mid range; senior managers and executives at top."
+  },
+
+  "Other Services": {
+    "abs_anzsic": "S",
+    "median_weekly_earnings": 1075,
+    "median_annual": 55900,
+    "income_band": "low_mid",
+    "salary_quintiles": [28000, 40000, 55900, 74000, 115000],
+    "quintile_source": "ABS EEH 2023-24, estimated quintile midpoints",
+    "notes": "Catch-all category including repair services, personal care, funeral services, religious organisations."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "_notes": "Parameters derived from ABS Household Expenditure Survey 2021-22. consumption_rate = proportion of after-tax income that is spent (vs saved). gst_coverage = proportion of total spending that falls on GST-applicable goods and services (food staples, health, education, rent, financial services are GST-exempt). Source: ABS Cat. 6530.0, Treasury modelling.",
+  "_formula": "gst_per_employee = after_tax_income * consumption_rate * gst_coverage * gst_rate / (1 + gst_rate)",
+  "_note_formula": "We divide by (1 + gst_rate) because retail prices are GST-inclusive; the GST component = price * rate/(1+rate) = price * 10/110",
+  "low": {
+    "label": "Low income (< $40k gross)",
+    "consumption_rate": 0.95,
+    "gst_coverage": 0.42,
+    "notes": "Low-income households spend almost all income and a higher proportion on food/essentials which are GST-exempt, but also proportionally more on fast food, clothing, household goods which are taxable."
+  },
+  "low_mid": {
+    "label": "Lower-middle income ($40k–$60k gross)",
+    "consumption_rate": 0.90,
+    "gst_coverage": 0.43,
+    "notes": "Retail, hospitality and entry-level service workers."
+  },
+  "mid": {
+    "label": "Middle income ($60k–$90k gross)",
+    "consumption_rate": 0.85,
+    "gst_coverage": 0.44,
+    "notes": "Healthcare, transport, education workers."
+  },
+  "mid_high": {
+    "label": "Upper-middle income ($90k–$130k gross)",
+    "consumption_rate": 0.82,
+    "gst_coverage": 0.44,
+    "notes": "Tech, construction, professional services."
+  },
+  "high": {
+    "label": "High income (> $130k gross)",
+    "consumption_rate": 0.75,
+    "gst_coverage": 0.38,
+    "notes": "High-income earners save more and spend proportionally more on GST-exempt categories: private health insurance, overseas travel, financial services, private school fees."
+  }
+}
