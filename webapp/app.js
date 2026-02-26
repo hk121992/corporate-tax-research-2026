@@ -650,19 +650,22 @@ function buildTSRChart() {
     byIndustry[ind].push(c);
   }
 
-  // Determine axis range for parity line
-  let maxVal = 0;
+  // Determine axis ranges independently so x-axis isn't inflated by y-axis outliers
+  let maxX = 0;
+  let maxY = 0;
   for (const c of filteredCompanies) {
     const totals = computeTotals(c);
     const cr = getCapitalReturns(c);
-    maxVal = Math.max(maxVal, totals.total, cr.total);
+    maxX = Math.max(maxX, totals.total);
+    maxY = Math.max(maxY, cr.total);
   }
+  const parityMax = Math.max(maxX, maxY) * 1.08;
 
-  // Parity reference line (Y = X)
+  // Parity reference line (Y = X) — must extend to parityMax on both axes
   const parityDataset = {
     type: "line",
     label: "Parity (Tax = Returns)",
-    data: [{ x: 0, y: 0 }, { x: maxVal * 1.08, y: maxVal * 1.08 }],
+    data: [{ x: 0, y: 0 }, { x: parityMax, y: parityMax }],
     borderColor: "rgba(80,80,80,0.22)",
     borderDash: [8, 4],
     borderWidth: 1.5,
@@ -749,12 +752,14 @@ function buildTSRChart() {
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
+          max: maxX * 1.1,
         },
         y: {
           title: { display: true, text: "Capital Returned to Shareholders (Dividends + Buybacks) — AUD", font: { size: 12 } },
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
+          max: maxY * 1.1,
         },
       },
     },
