@@ -659,13 +659,15 @@ function buildTSRChart() {
     maxX = Math.max(maxX, totals.total);
     maxY = Math.max(maxY, cr.total);
   }
-  const parityMax = Math.max(maxX, maxY) * 1.08;
+  const axisMaxX = maxX * 1.1;
+  const axisMaxY = maxY * 1.1;
 
-  // Parity reference line (Y = X) — must extend to parityMax on both axes
+  // Parity reference line (Y = X) — clipped to x-axis right edge so it
+  // doesn't force Chart.js to expand the x-axis beyond actual TTC data.
   const parityDataset = {
     type: "line",
     label: "Parity (Tax = Returns)",
-    data: [{ x: 0, y: 0 }, { x: parityMax, y: parityMax }],
+    data: [{ x: 0, y: 0 }, { x: axisMaxX, y: axisMaxX }],
     borderColor: "rgba(80,80,80,0.22)",
     borderDash: [8, 4],
     borderWidth: 1.5,
@@ -752,14 +754,14 @@ function buildTSRChart() {
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
-          max: maxX * 1.1,
+          max: axisMaxX,
         },
         y: {
           title: { display: true, text: "Capital Returned to Shareholders (Dividends + Buybacks) — AUD", font: { size: 12 } },
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
-          max: maxY * 1.1,
+          max: axisMaxY,
         },
       },
     },
