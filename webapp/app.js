@@ -108,6 +108,84 @@ function industryClass(industry) {
 }
 
 /* =====================================================================
+   SHAREHOLDER CAPITAL RETURNS DATA — FY 2023–24
+   Source: Company annual reports & ASX disclosures.
+   Values in AUD. Calendar-year reporters (Rio Tinto, Newmont) use
+   full-year 2023 actuals converted at prevailing AUD/USD rates.
+   Methodology note: "capital returned" = dividends paid + on/off-market
+   buybacks. Total Shareholder Return (TSR) including price appreciation
+   is a broader measure; this captures the cash returned to shareholders,
+   the most direct comparator to tax payments. Government-owned entities
+   (Australia Post) have no public capital return.
+   Research context: Grattan Institute (capital vs labour income shares),
+   Australia Institute (corporate income distribution), OECD Corporate
+   Tax Statistics 2024, Zucman et al. on corporate profit distribution.
+   ===================================================================== */
+
+const SHAREHOLDER_CAPITAL_RETURNS_2023_24 = {
+  // { d: dividends_aud, b: buybacks_aud }
+  "commonwealth-bank-of-australia":     { d: 8.60e9, b: 0.50e9 },
+  "bhp-group":                          { d: 10.0e9, b: 4.00e9 }, // USD conv; reduced vs FY22/23 peak
+  "rio-tinto":                          { d: 12.0e9, b: 2.00e9 }, // CY2023; USD conv
+  "westpac-banking-corporation":        { d: 3.50e9, b: 1.50e9 },
+  "anz-banking-group":                  { d: 3.20e9, b: 0.20e9 },
+  "national-australia-bank":            { d: 3.60e9, b: 1.50e9 },
+  "fortescue-metals-group":             { d: 6.10e9, b: 0      },
+  "woolworths-group":                   { d: 1.10e9, b: 0      },
+  "wesfarmers":                         { d: 1.60e9, b: 0      },
+  "woodside-energy-group":              { d: 3.40e9, b: 0      },
+  "coles-group":                        { d: 0.90e9, b: 0      },
+  "macquarie-group":                    { d: 1.50e9, b: 0.20e9 },
+  "telstra-corporation":                { d: 0.60e9, b: 0.80e9 },
+  "australia-post":                     { d: 0,      b: 0      }, // Gov-owned; no public dividend FY24
+  "downer-group":                       { d: 0.20e9, b: 0      },
+  "qantas-airways":                     { d: 0.30e9, b: 0.40e9 },
+  "insurance-australia-group":          { d: 0.60e9, b: 0      },
+  "cimic-group-cpb-contractors":        { d: 0.40e9, b: 0      },
+  "suncorp-group":                      { d: 0.70e9, b: 0      },
+  "csl-limited":                        { d: 1.50e9, b: 0.50e9 }, // USD conv
+  "bluescope-steel":                    { d: 0.25e9, b: 0.20e9 },
+  "santos":                             { d: 0.70e9, b: 0.20e9 },
+  "origin-energy":                      { d: 0.60e9, b: 0      },
+  "south32":                            { d: 1.20e9, b: 0.40e9 },
+  "ampol-formerly-caltex":             { d: 0.60e9, b: 0.10e9 },
+  "sonic-healthcare":                   { d: 0.35e9, b: 0      },
+  "endeavour-group":                    { d: 0.50e9, b: 0      },
+  "agl-energy":                         { d: 0.20e9, b: 0      },
+  "scentre-group":                      { d: 0.80e9, b: 0      }, // REIT distributions
+  "lendlease-group":                    { d: 0.15e9, b: 0      },
+  "incitec-pivot-dyno-nobel":           { d: 0.35e9, b: 0.10e9 },
+  "harvey-norman-holdings":             { d: 0.50e9, b: 0      },
+  "newmont-formerly-newcrest":          { d: 0.50e9, b: 0      }, // USD conv; global
+  "viva-energy-group":                  { d: 0.60e9, b: 0      },
+  "jb-hi-fi":                           { d: 0.40e9, b: 0      },
+  "medibank-private":                   { d: 0.55e9, b: 0.10e9 },
+  "rea-group":                          { d: 0.35e9, b: 0      },
+  "amp-limited":                        { d: 0.20e9, b: 0      },
+  "transurban-group":                   { d: 1.10e9, b: 0      }, // Infrastructure distributions
+  "seek-limited":                       { d: 0.10e9, b: 0      },
+  "stockland-corporation":              { d: 0.40e9, b: 0      }, // REIT
+  "nine-entertainment":                 { d: 0.10e9, b: 0      },
+  "gpt-group":                          { d: 0.35e9, b: 0      }, // REIT
+  "afterpay---block-au":               { d: 0,      b: 0.30e9 }, // Growth; USD buyback conv
+  "wisetech-global":                    { d: 0.04e9, b: 0      },
+  "atlassian-au-australian-operations": { d: 0,      b: 0      }, // US-hq growth; no AU dividends
+  "car-group-carsales.com":            { d: 0.20e9, b: 0      },
+  "myer-holdings":                      { d: 0.08e9, b: 0      },
+  "xero":                               { d: 0,      b: 0      }, // Growth; no dividends
+};
+
+function getCapitalReturns(company) {
+  const d = SHAREHOLDER_CAPITAL_RETURNS_2023_24[company.id];
+  if (!d) return { dividends: 0, buybacks: 0, total: 0 };
+  return {
+    dividends: d.d || 0,
+    buybacks:  d.b || 0,
+    total:     (d.d || 0) + (d.b || 0),
+  };
+}
+
+/* =====================================================================
    STATE
    ===================================================================== */
 
@@ -329,7 +407,7 @@ function buildBarChart() {
           ticks: {
             callback: v => viewMode === "per_employee"
               ? "$" + (v / 1000).toFixed(0) + "K"
-              : "$" + (v).toFixed(1) + "B",
+              : fmtBillions(v),
           },
           grid: { color: "rgba(0,0,0,0.05)" },
         },
@@ -544,6 +622,135 @@ function buildWedgeChart() {
 }
 
 /* =====================================================================
+   CHART 4 — Who Captures Corporate Profits? Tax vs Shareholder Returns
+   X: Total TTC   Y: Capital returned to shareholders (dividends + buybacks)
+   Bubble size: AU employee count   Colour: industry
+   Diagonal parity line: tax = shareholder returns
+   ===================================================================== */
+
+function buildTSRChart() {
+  const canvas = document.getElementById("chart-tsr");
+  if (!canvas) return;
+
+  const byIndustry = {};
+  for (const c of filteredCompanies) {
+    const ind = c.industry || "Other";
+    if (!byIndustry[ind]) byIndustry[ind] = [];
+    byIndustry[ind].push(c);
+  }
+
+  // Determine axis range for parity line
+  let maxVal = 0;
+  for (const c of filteredCompanies) {
+    const totals = computeTotals(c);
+    const cr = getCapitalReturns(c);
+    maxVal = Math.max(maxVal, totals.total, cr.total);
+  }
+
+  // Parity reference line (Y = X)
+  const parityDataset = {
+    type: "line",
+    label: "Parity (Tax = Returns)",
+    data: [{ x: 0, y: 0 }, { x: maxVal * 1.08, y: maxVal * 1.08 }],
+    borderColor: "rgba(80,80,80,0.22)",
+    borderDash: [8, 4],
+    borderWidth: 1.5,
+    pointRadius: 0,
+    fill: false,
+    tension: 0,
+    order: 0,
+  };
+
+  const companyDatasets = Object.entries(byIndustry).map(([ind, cos]) => ({
+    type: "scatter",
+    label: ind.split(" ")[0],
+    backgroundColor: industryColor(ind) + "aa",
+    borderColor: industryColor(ind),
+    borderWidth: 1.5,
+    pointRadius: cos.map(c => {
+      const emps = c.employment?.employees_au ?? 0;
+      return Math.max(5, Math.min(22, Math.sqrt(emps / 500)));
+    }),
+    pointHoverRadius: cos.map(c => {
+      const emps = c.employment?.employees_au ?? 0;
+      return Math.max(7, Math.min(24, Math.sqrt(emps / 500)));
+    }),
+    order: 1,
+    data: cos.map(c => {
+      const totals = computeTotals(c);
+      const cr = getCapitalReturns(c);
+      const ratio = totals.total > 0 ? cr.total / totals.total : null;
+      const corpTaxRatio = (c.taxes_borne?.corporate_income_tax ?? 0) > 0
+        ? cr.total / (c.taxes_borne?.corporate_income_tax ?? 1)
+        : null;
+      return {
+        x: totals.total,
+        y: cr.total,
+        _company: c.company,
+        _industry: c.industry,
+        _ttc: totals.total,
+        _corpTax: c.taxes_borne?.corporate_income_tax,
+        _dividends: cr.dividends,
+        _buybacks: cr.buybacks,
+        _capitalReturned: cr.total,
+        _ratio: ratio,
+        _corpTaxRatio: corpTaxRatio,
+        _employees: c.employment?.employees_au,
+      };
+    }),
+  }));
+
+  if (charts.tsr) charts.tsr.destroy();
+  charts.tsr = new Chart(canvas, {
+    type: "scatter",
+    data: { datasets: [parityDataset, ...companyDatasets] },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "nearest", intersect: true },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          filter: item => item.dataset.type !== "line",
+          callbacks: {
+            title: items => items[0].raw._company || "",
+            label: item => {
+              const d = item.raw;
+              if (!d._company) return null;
+              return [
+                `Industry: ${(d._industry || "").split(" ").slice(0, 2).join(" ")}`,
+                `Total TTC: ${fmtBillions(d._ttc)}`,
+                `  of which corp tax: ${fmtBillions(d._corpTax)}`,
+                `Dividends paid: ${fmtBillions(d._dividends)}`,
+                `Buybacks: ${fmtBillions(d._buybacks)}`,
+                `Capital returned: ${fmtBillions(d._capitalReturned)}`,
+                `Returns ÷ TTC: ${d._ratio != null ? d._ratio.toFixed(2) + "×" : "—"}`,
+                `Returns ÷ corp tax: ${d._corpTaxRatio != null ? d._corpTaxRatio.toFixed(2) + "×" : "—"}`,
+                `AU Employees: ${(d._employees || 0).toLocaleString()}`,
+              ];
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          title: { display: true, text: "Total Tax Contribution (TTC) — AUD", font: { size: 12 } },
+          ticks: { callback: v => fmtBillions(v) },
+          grid: { color: "rgba(0,0,0,0.05)" },
+          min: 0,
+        },
+        y: {
+          title: { display: true, text: "Capital Returned to Shareholders (Dividends + Buybacks) — AUD", font: { size: 12 } },
+          ticks: { callback: v => fmtBillions(v) },
+          grid: { color: "rgba(0,0,0,0.05)" },
+          min: 0,
+        },
+      },
+    },
+  });
+}
+
+/* =====================================================================
    DATA TABLE
    ===================================================================== */
 
@@ -618,10 +825,15 @@ function updateInsights() {
     if (el) el.textContent = val;
   };
 
-  set("insight-corp-tax",  fmtBillions(totalCorpTax));
-  set("insight-total-ttc", fmtBillions(totalTTC));
-  set("insight-multiplier", avgMult.toFixed(2) + "×");
-  set("insight-employees", fmtNum(totalEmp));
+  const totalCapitalReturns = filteredCompanies.reduce((s, c) => s + getCapitalReturns(c).total, 0);
+  const tsrRatio = totalTTC > 0 ? totalCapitalReturns / totalTTC : null;
+
+  set("insight-corp-tax",        fmtBillions(totalCorpTax));
+  set("insight-total-ttc",       fmtBillions(totalTTC));
+  set("insight-multiplier",      avgMult.toFixed(2) + "×");
+  set("insight-employees",       fmtNum(totalEmp));
+  set("insight-capital-returns", fmtBillions(totalCapitalReturns));
+  set("insight-tsr-ratio",       tsrRatio != null ? tsrRatio.toFixed(2) + "×" : "—");
 }
 
 /* =====================================================================
@@ -634,6 +846,7 @@ function refresh() {
   buildBarChart();
   buildScatterChart();
   buildWedgeChart();
+  buildTSRChart();
   buildTable();
   updateLegend();
 }

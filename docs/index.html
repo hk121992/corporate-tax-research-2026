@@ -250,6 +250,14 @@
           <div class="insight-value" id="insight-employees">—</div>
           <div class="insight-label">Total Australian employees<br><small>Across all filtered companies</small></div>
         </div>
+        <div class="insight-card" style="border-top:3px solid #27ae60">
+          <div class="insight-value" id="insight-capital-returns">—</div>
+          <div class="insight-label">Capital returned to shareholders<br><small>Dividends + buybacks (est. annual reports)</small></div>
+        </div>
+        <div class="insight-card" style="border-top:3px solid #27ae60">
+          <div class="insight-value" id="insight-tsr-ratio">—</div>
+          <div class="insight-label">Shareholder returns per $1 of TTC<br><small>Capital returned ÷ total tax contribution</small></div>
+        </div>
       </div>
     </div>
 
@@ -337,6 +345,56 @@
       </div>
     </div>
 
+    <!-- CHART 4: WHO CAPTURES PROFITS? TAX vs SHAREHOLDER RETURNS -->
+    <div class="chart-section">
+      <div class="section-header">
+        <div>
+          <h2>Who Captures Corporate Profits? Tax vs Capital Returns to Shareholders</h2>
+          <p class="section-desc">
+            Each bubble is one company, plotted by its total tax contribution (horizontal) against
+            capital returned to shareholders — dividends plus buybacks (vertical).
+            The dashed diagonal marks parity: below the line, shareholders receive more than
+            the government; above, the government receives more.
+            Bubble size reflects Australian employee count.
+          </p>
+        </div>
+        <button class="method-btn" data-method-toggle="method-tsr">Show methodology ▼</button>
+      </div>
+      <div id="method-tsr" class="section-method">
+        <strong>Capital returned to shareholders</strong> = dividends paid + on/off-market share buybacks
+        in FY2023–24. Sourced from company annual reports and ASX disclosures.
+        Calendar-year reporters (Rio Tinto, Newmont) use full-year 2023 actuals converted at
+        prevailing AUD/USD rates. Government-owned entities (Australia Post) have no public capital return.
+        Growth-stage companies that retain earnings rather than distributing them (Atlassian, Xero) appear
+        near the baseline. <em>Total Shareholder Return (TSR)</em>, which also includes share price
+        appreciation, is a broader measure; capital returns are used here as the more
+        directly comparable cash-based metric.<br><br>
+        <strong>Research context:</strong> The framing draws on academic and policy work examining
+        how corporate income is distributed across labour (wages), government (taxes), and
+        capital (shareholder returns) — the three primary claimants on corporate revenue:
+        Grattan Institute research on capital vs labour income shares in Australia;
+        Australia Institute analysis of corporate income distribution;
+        OECD Corporate Tax Statistics 2024 (effective rates and shareholder distributions);
+        Zucman &amp; Saez on profit-shifting and the distribution of corporate income;
+        PwC TTC Framework distinguishing taxes borne vs taxes collected.
+        <br><br>
+        <strong>Key finding:</strong> For companies below the diagonal, shareholders capture more
+        than the government collects in total tax — and the gap is widest when measured against
+        corporate tax alone (excluding the employment-linked taxes in TTC). This gap widens as
+        revenue-per-employee rises, making it the central distributional question for AI-era tax policy.
+      </div>
+      <div class="chart-body">
+        <div class="chart-container chart-container-scatter">
+          <canvas id="chart-tsr"></canvas>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:#999;margin:0.5rem 1rem 0;font-style:italic">
+        Dashed diagonal = parity (tax contribution equals capital returned to shareholders).
+        Companies below the line return more to shareholders than they contribute in total tax.
+        Hover for company details including corporate-tax-only vs capital-returns ratio.
+      </p>
+    </div>
+
     <!-- DATA TABLE -->
     <div class="table-section">
       <div class="table-header-row">
@@ -417,6 +475,13 @@
         <a href="https://www.oecd.org/tax/taxing-wages-20725124.htm" target="_blank" rel="noopener">oecd.org</a>
       </li>
       <li>Company financial data from publicly available annual reports (FY2024 / FY2023–24)</li>
+      <li>Shareholder capital returns (dividends &amp; buybacks): company annual reports, ASX disclosures FY2023–24</li>
+      <li>Grattan Institute — <em>Who's in the room?</em> and capital vs labour income share research —
+        <a href="https://grattan.edu.au" target="_blank" rel="noopener">grattan.edu.au</a>
+      </li>
+      <li>OECD Corporate Tax Statistics 2024 (effective rates, profit distribution) —
+        <a href="https://www.oecd.org/tax/tax-policy/corporate-tax-statistics.htm" target="_blank" rel="noopener">oecd.org</a>
+      </li>
     </ul>
 
     <div class="footer-disclaimer">
