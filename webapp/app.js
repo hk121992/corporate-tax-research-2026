@@ -724,11 +724,12 @@ function downloadCSV() {
    ===================================================================== */
 
 async function init() {
-  const mainEl = document.getElementById("main-content");
-  if (mainEl) mainEl.innerHTML = `<div class="loading-overlay"><div class="spinner"></div><div>Loading dataset…</div></div>`;
-
+  // dataset_2023_24.js is loaded synchronously via <script> tag before app.js,
+  // so window.__DATASETS__ is already populated — no spinner needed.
   const dataset = await loadDataset("australia_2023-24");
+
   if (!dataset) {
+    const mainEl = document.getElementById("main-content");
     if (mainEl) mainEl.innerHTML = `
       <div class="container" style="padding:3rem 0">
         <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:2rem;max-width:600px">
@@ -743,12 +744,6 @@ python pipeline/build_dataset.py</pre>
 
   allCompanies = dataset.companies || [];
 
-  // Restore main HTML (it was replaced by the spinner)
-  if (mainEl) mainEl.innerHTML = document.getElementById("main-template")?.innerHTML || mainEl.innerHTML;
-
-  // Render with initial state
-  refresh();
-
   // Update aggregate stats in the header
   const meta = dataset.aggregates || {};
   const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
@@ -757,8 +752,9 @@ python pipeline/build_dataset.py</pre>
   setEl("agg-ttc",        fmtBillions(meta.total_tax_contribution_core));
   setEl("agg-employees",  fmtNum(meta.total_employees_au));
 
-  // Wire up controls
+  // Wire up controls then render
   bindControls();
+  refresh();
 }
 
 function bindControls() {
