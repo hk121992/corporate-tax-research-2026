@@ -754,14 +754,17 @@ function buildTSRChart() {
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
-          max: axisMaxX,
+          // afterDataLimits overrides Chart.js's internal auto-range computation
+          // (which ignores max/min on mixed scatter+line charts) to enforce the
+          // correct x-axis ceiling based on actual TTC data, not the y-axis range.
+          afterDataLimits: scale => { scale.max = axisMaxX; },
         },
         y: {
           title: { display: true, text: "Capital Returned to Shareholders (Dividends + Buybacks) — AUD", font: { size: 12 } },
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
-          max: axisMaxY,
+          afterDataLimits: scale => { scale.max = axisMaxY; },
         },
       },
     },
