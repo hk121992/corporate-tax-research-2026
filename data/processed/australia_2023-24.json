@@ -2,7 +2,7 @@
   "meta": {
     "country": "australia",
     "year": "2023-24",
-    "generated": "2026-02-26T14:04:29.060459Z",
+    "generated": "2026-02-26T16:31:13.575907Z",
     "company_count": 49,
     "methodology_version": "1.0",
     "framework": "PwC Total Tax Contribution (TTC) Framework",
@@ -23,6 +23,7 @@
     "total_corporate_income_tax": 40475000000,
     "total_tax_contribution_core": 69846788414,
     "total_employees_au": 1072600,
+    "total_resource_payments_to_crown": 15490000000,
     "avg_employment_multiplier": 2.325
   },
   "companies": [
@@ -31,6 +32,13 @@
       "company": "Commonwealth Bank of Australia",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 53600000000,
         "taxable_income": 13400000000,
@@ -85,6 +93,13 @@
       "company": "BHP Group",
       "industry": "Mining",
       "primary_state": "WA",
+      "resource_payments_to_crown": {
+        "royalties": 8000000000,
+        "prrt": 400000000,
+        "total": 8400000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 55200000000,
         "taxable_income": 18100000000,
@@ -139,6 +154,13 @@
       "company": "Rio Tinto",
       "industry": "Mining",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 3500000000,
+        "prrt": 0,
+        "total": 3500000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 72400000000,
         "taxable_income": 12300000000,
@@ -193,6 +215,13 @@
       "company": "Westpac Banking Corporation",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 42500000000,
         "taxable_income": 9100000000,
@@ -247,6 +276,13 @@
       "company": "ANZ Banking Group",
       "industry": "Finance and Insurance Services",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 39800000000,
         "taxable_income": 9320000000,
@@ -301,6 +337,13 @@
       "company": "National Australia Bank",
       "industry": "Finance and Insurance Services",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 41200000000,
         "taxable_income": 9400000000,
@@ -355,6 +398,13 @@
       "company": "Fortescue Metals Group",
       "industry": "Mining",
       "primary_state": "WA",
+      "resource_payments_to_crown": {
+        "royalties": 1600000000,
+        "prrt": 0,
+        "total": 1600000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 25800000000,
         "taxable_income": 7960000000,
@@ -409,6 +459,13 @@
       "company": "Woolworths Group",
       "industry": "Retail Trade",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 65300000000,
         "taxable_income": 2200000000,
@@ -463,6 +520,13 @@
       "company": "Wesfarmers",
       "industry": "Retail Trade",
       "primary_state": "WA",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 44100000000,
         "taxable_income": 3250000000,
@@ -517,6 +581,13 @@
       "company": "Woodside Energy Group",
       "industry": "Mining",
       "primary_state": "WA",
+      "resource_payments_to_crown": {
+        "royalties": 350000000,
+        "prrt": 550000000,
+        "total": 900000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 19800000000,
         "taxable_income": 5510000000,
@@ -571,6 +642,13 @@
       "company": "Coles Group",
       "industry": "Retail Trade",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 42300000000,
         "taxable_income": 1680000000,
@@ -625,6 +703,13 @@
       "company": "Macquarie Group",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 28400000000,
         "taxable_income": 3520000000,
@@ -679,6 +764,13 @@
       "company": "Telstra Corporation",
       "industry": "Information Media and Telecommunications",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 22800000000,
         "taxable_income": 2950000000,
@@ -733,6 +825,13 @@
       "company": "Australia Post",
       "industry": "Transport Postal and Warehousing",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 8520000000,
         "taxable_income": 560000000,
@@ -787,6 +886,13 @@
       "company": "Downer Group",
       "industry": "Construction",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 12200000000,
         "taxable_income": 580000000,
@@ -841,6 +947,13 @@
       "company": "Qantas Airways",
       "industry": "Transport Postal and Warehousing",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 19200000000,
         "taxable_income": 2470000000,
@@ -895,6 +1008,13 @@
       "company": "Insurance Australia Group",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 22800000000,
         "taxable_income": 1640000000,
@@ -949,6 +1069,13 @@
       "company": "CIMIC Group (CPB Contractors)",
       "industry": "Construction",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 15200000000,
         "taxable_income": 810000000,
@@ -1003,6 +1130,13 @@
       "company": "Suncorp Group",
       "industry": "Finance and Insurance Services",
       "primary_state": "QLD",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 16400000000,
         "taxable_income": 1380000000,
@@ -1057,6 +1191,13 @@
       "company": "CSL Limited",
       "industry": "Health Care and Social Assistance",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 19200000000,
         "taxable_income": 3840000000,
@@ -1111,6 +1252,13 @@
       "company": "BlueScope Steel",
       "industry": "Construction",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 14800000000,
         "taxable_income": 1620000000,
@@ -1165,6 +1313,13 @@
       "company": "Santos",
       "industry": "Mining",
       "primary_state": "SA",
+      "resource_payments_to_crown": {
+        "royalties": 200000000,
+        "prrt": 200000000,
+        "total": 400000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 8480000000,
         "taxable_income": 2510000000,
@@ -1219,6 +1374,13 @@
       "company": "Origin Energy",
       "industry": "Electricity Gas Water and Waste Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 80000000,
+        "prrt": 90000000,
+        "total": 170000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 19600000000,
         "taxable_income": 2020000000,
@@ -1273,6 +1435,13 @@
       "company": "South32",
       "industry": "Mining",
       "primary_state": "WA",
+      "resource_payments_to_crown": {
+        "royalties": 330000000,
+        "prrt": 0,
+        "total": 330000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 11200000000,
         "taxable_income": 1840000000,
@@ -1327,6 +1496,13 @@
       "company": "Ampol (formerly Caltex)",
       "industry": "Mining",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 33400000000,
         "taxable_income": 1250000000,
@@ -1381,6 +1557,13 @@
       "company": "Sonic Healthcare",
       "industry": "Health Care and Social Assistance",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 9820000000,
         "taxable_income": 1045000000,
@@ -1435,6 +1618,13 @@
       "company": "Endeavour Group",
       "industry": "Retail Trade",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 11900000000,
         "taxable_income": 960000000,
@@ -1489,6 +1679,13 @@
       "company": "AGL Energy",
       "industry": "Electricity Gas Water and Waste Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 13100000000,
         "taxable_income": 1020000000,
@@ -1543,6 +1740,13 @@
       "company": "Scentre Group",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 3450000000,
         "taxable_income": 1280000000,
@@ -1597,6 +1801,13 @@
       "company": "Lendlease Group",
       "industry": "Construction",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 10200000000,
         "taxable_income": 540000000,
@@ -1651,6 +1862,13 @@
       "company": "Incitec Pivot (Dyno Nobel)",
       "industry": "Mining",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 30000000,
+        "prrt": 0,
+        "total": 30000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 5600000000,
         "taxable_income": 460000000,
@@ -1705,6 +1923,13 @@
       "company": "Harvey Norman Holdings",
       "industry": "Retail Trade",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 8600000000,
         "taxable_income": 840000000,
@@ -1759,6 +1984,13 @@
       "company": "Newmont (formerly Newcrest)",
       "industry": "Mining",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 160000000,
+        "prrt": 0,
+        "total": 160000000,
+        "is_applicable": true,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 4800000000,
         "taxable_income": 680000000,
@@ -1813,6 +2045,13 @@
       "company": "Viva Energy Group",
       "industry": "Mining",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 26800000000,
         "taxable_income": 820000000,
@@ -1867,6 +2106,13 @@
       "company": "JB Hi-Fi",
       "industry": "Retail Trade",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 9900000000,
         "taxable_income": 768000000,
@@ -1921,6 +2167,13 @@
       "company": "Medibank Private",
       "industry": "Finance and Insurance Services",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 7850000000,
         "taxable_income": 680000000,
@@ -1975,6 +2228,13 @@
       "company": "REA Group",
       "industry": "Information Media and Telecommunications",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 1620000000,
         "taxable_income": 845000000,
@@ -2029,6 +2289,13 @@
       "company": "AMP Limited",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 8200000000,
         "taxable_income": 420000000,
@@ -2083,6 +2350,13 @@
       "company": "Transurban Group",
       "industry": "Transport Postal and Warehousing",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 3820000000,
         "taxable_income": 820000000,
@@ -2137,6 +2411,13 @@
       "company": "SEEK Limited",
       "industry": "Information Media and Telecommunications",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 1580000000,
         "taxable_income": 620000000,
@@ -2191,6 +2472,13 @@
       "company": "Stockland Corporation",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 3200000000,
         "taxable_income": 680000000,
@@ -2245,6 +2533,13 @@
       "company": "Nine Entertainment",
       "industry": "Information Media and Telecommunications",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 2920000000,
         "taxable_income": 380000000,
@@ -2299,6 +2594,13 @@
       "company": "GPT Group",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 1520000000,
         "taxable_income": 780000000,
@@ -2353,6 +2655,13 @@
       "company": "Afterpay / Block AU",
       "industry": "Finance and Insurance Services",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 5400000000,
         "taxable_income": 180000000,
@@ -2407,6 +2716,13 @@
       "company": "WiseTech Global",
       "industry": "Information Media and Telecommunications",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 954000000,
         "taxable_income": 412000000,
@@ -2461,6 +2777,13 @@
       "company": "Atlassian AU (Australian operations)",
       "industry": "Information Media and Telecommunications",
       "primary_state": "NSW",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 1200000000,
         "taxable_income": 280000000,
@@ -2515,6 +2838,13 @@
       "company": "CAR Group (Carsales.com)",
       "industry": "Information Media and Telecommunications",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 1020000000,
         "taxable_income": 420000000,
@@ -2569,6 +2899,13 @@
       "company": "Myer Holdings",
       "industry": "Retail Trade",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 3180000000,
         "taxable_income": 142000000,
@@ -2623,6 +2960,13 @@
       "company": "Xero",
       "industry": "Information Media and Telecommunications",
       "primary_state": "VIC",
+      "resource_payments_to_crown": {
+        "royalties": 0,
+        "prrt": 0,
+        "total": 0,
+        "is_applicable": false,
+        "note": "Payments to government as resource owner — NOT classified as taxes. Royalties: state-based resource charges on extracted commodities. PRRT: Petroleum Resource Rent Tax on petroleum project profits. Source: company annual reports FY2023-24."
+      },
       "ato_data": {
         "total_income": 1840000000,
         "taxable_income": 185000000,

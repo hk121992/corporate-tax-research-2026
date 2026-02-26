@@ -543,6 +543,23 @@ def calculate_company_taxes(
     else:
         super_result = {"super_per_employee": 0, "total_super_cost": 0}
 
+    # --- Resource payments to Crown (royalties + PRRT) ---
+    # These are payments to government as resource owner — NOT classified as taxes.
+    # Royalties: state-based charges on extracted commodities (iron ore, coal, gas, gold).
+    # PRRT: Petroleum Resource Rent Tax on petroleum project profits.
+    # Source: company annual reports. Only applicable to mining/petroleum companies.
+    def _safe_num(val: object) -> float:
+        """Convert a value that may be NaN, None, or a string to a float."""
+        try:
+            v = float(val)
+            return 0.0 if (v != v) else v  # v != v is True only for IEEE NaN
+        except (TypeError, ValueError):
+            return 0.0
+
+    royalties = _safe_num(company.get("royalties_aud"))
+    prrt = _safe_num(company.get("prrt_aud"))
+    resource_payments_total = royalties + prrt
+
     # --- Aggregate totals ---
     taxes_borne = {
         "corporate_income_tax": round(corporate_tax),
@@ -598,6 +615,18 @@ def calculate_company_taxes(
         "company": company_name,
         "industry": industry,
         "primary_state": primary_state,
+        "resource_payments_to_crown": {
+            "royalties": round(royalties),
+            "prrt": round(prrt),
+            "total": round(resource_payments_total),
+            "is_applicable": resource_payments_total > 0,
+            "note": (
+                "Payments to government as resource owner — NOT classified as taxes. "
+                "Royalties: state-based resource charges on extracted commodities. "
+                "PRRT: Petroleum Resource Rent Tax on petroleum project profits. "
+                "Source: company annual reports FY2023-24."
+            ),
+        },
         "ato_data": {
             "total_income": round(total_income),
             "taxable_income": round(taxable_income),

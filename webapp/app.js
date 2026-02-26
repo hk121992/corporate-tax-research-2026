@@ -73,6 +73,15 @@ const TAX_COMPONENTS = [
     defaultOn: false,
     tooltip: "ROUGH ESTIMATE — highly variable.\nResidential land tax paid by employees who own property.\nFormula: employees × homeownership_rate × median_land_value × effective_rate.\nDisabled by default.",
   },
+  {
+    id:       "resource_payments_to_crown",
+    label:    "Resource payments to Crown",
+    tag:      "resource",
+    color:    "#7b3f00",
+    category: "resource_payments",
+    defaultOn: false,
+    tooltip:  "Royalties + PRRT paid to government as resource owner.\nNOT a tax — government receives as owner of the resource.\nOnly applies to mining/petroleum companies.\nRoyalties: state-based charges on extracted commodities.\nPRRT: Petroleum Resource Rent Tax on petroleum profits.\nSource: company annual reports FY2023–24.",
+  },
 ];
 
 const INDUSTRY_COLOURS = {
@@ -216,6 +225,8 @@ function computeTotals(company) {
     let val = 0;
     if (comp.category === "taxes_borne") {
       val = company.taxes_borne?.[comp.id] ?? 0;
+    } else if (comp.category === "resource_payments") {
+      val = company.resource_payments_to_crown?.total ?? 0;
     } else {
       val = company.taxes_collected?.[comp.id] ?? 0;
     }
@@ -791,6 +802,11 @@ function buildTable() {
       <td class="num">${fmtBillions(t.values.employer_payroll_tax)}</td>
       <td class="num">${fmtBillions((t.values.employee_income_tax_withheld ?? 0) + (t.values.employee_medicare_levy ?? 0))}</td>
       <td class="num">${fmtBillions(t.values.employee_gst_spending_estimate)}</td>
+      <td class="num resource-cell">${
+        c.resource_payments_to_crown?.is_applicable
+          ? `<span title="Royalties: ${fmtBillions(c.resource_payments_to_crown.royalties)} · PRRT: ${fmtBillions(c.resource_payments_to_crown.prrt)}">${fmtBillions(c.resource_payments_to_crown.total)}</span>`
+          : '<span class="text-muted">—</span>'
+      }</td>
       <td class="num num-highlight">${fmtBillions(t.total)}</td>
       <td class="multiplier-cell">
         <div class="multiplier-bar-wrap">
@@ -864,8 +880,9 @@ function updateLegend() {
       <div class="legend-item" style="opacity:${active ? 1 : 0.4}">
         <div class="legend-swatch" style="background:${comp.color}"></div>
         <span>${comp.label}</span>
-        ${comp.tag === "actual" ? '<span style="font-size:.65rem;color:#155724;font-weight:700"> ATO</span>' : ""}
-        ${comp.tag === "rough"  ? '<span style="font-size:.65rem;color:#856404;font-weight:700"> rough</span>' : ""}
+        ${comp.tag === "actual"   ? '<span style="font-size:.65rem;color:#155724;font-weight:700"> ATO</span>' : ""}
+        ${comp.tag === "rough"    ? '<span style="font-size:.65rem;color:#856404;font-weight:700"> rough</span>' : ""}
+        ${comp.tag === "resource" ? '<span style="font-size:.65rem;color:#7b3f00;font-weight:700"> not a tax</span>' : ""}
       </div>`;
   }).join("");
 }
@@ -897,6 +914,7 @@ function downloadCSV() {
     "Revenue (AUD)", "Corp Tax (AUD)", "Payroll Tax est (AUD)",
     "Employee Income Tax est (AUD)", "Medicare est (AUD)",
     "GST from Spending est (AUD)", "Land Tax est (AUD)",
+    "Royalties paid to Crown (AUD)", "PRRT paid to Crown (AUD)",
     "Total TTC (AUD)", "Employment Multiplier", "Revenue per Employee (AUD)",
     "Corp Tax Source",
   ];
@@ -917,6 +935,8 @@ function downloadCSV() {
       c.taxes_collected?.employee_medicare_levy ?? "",
       c.taxes_collected?.employee_gst_spending_estimate ?? "",
       c.taxes_borne?.land_tax_estimate ?? "",
+      c.resource_payments_to_crown?.royalties ?? "",
+      c.resource_payments_to_crown?.prrt ?? "",
       t.total,
       t.multiplier != null ? t.multiplier.toFixed(3) : "",
       c.metrics?.revenue_per_employee_aud ?? "",

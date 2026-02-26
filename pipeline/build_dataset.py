@@ -169,6 +169,7 @@ def build_dataset(
     total_corp_tax = sum(c["ato_data"]["tax_payable"] for c in companies)
     total_ttc = sum(c["totals"]["total_ttc_core"] for c in companies)
     total_employees = sum(c["employment"]["employees_au"] for c in companies)
+    total_resource_payments = sum(c["resource_payments_to_crown"]["total"] for c in companies)
 
     output = {
         "meta": {
@@ -195,6 +196,7 @@ def build_dataset(
             "total_corporate_income_tax": round(total_corp_tax),
             "total_tax_contribution_core": round(total_ttc),
             "total_employees_au": total_employees,
+            "total_resource_payments_to_crown": round(total_resource_payments),
             "avg_employment_multiplier": round(
                 sum(
                     c["metrics"]["employment_tax_multiplier"]

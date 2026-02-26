@@ -119,6 +119,15 @@
         <code>employees × homeownership_rate × median_land_value × rate</code>
         <p style="margin-top:0.5rem"><strong>Type:</strong> Taxes Borne — rough estimate</p>
       </div>
+
+      <div class="method-card method-card-resource">
+        <h4>⛏️ Resource Payments to Crown (optional)</h4>
+        <p><strong>NOT a tax</strong> — these are payments to government in its role as <em>resource owner</em>, not as sovereign tax authority. Shown separately to display the full economic contribution of resource companies without misclassifying their nature.</p>
+        <p><strong>Royalties:</strong> State-based charges on extracted commodities (iron ore, coal, gas, gold). WA levies 7.5% on iron ore netback value; Queensland levies royalties on coal and gas. Sources: company annual reports, state royalty schedules.</p>
+        <p><strong>PRRT:</strong> Petroleum Resource Rent Tax — a Commonwealth tax on the <em>profits</em> of petroleum projects above a threshold return. Applies to Woodside, Santos, Origin (APLNG) and BHP's residual petroleum interests.</p>
+        <code>BHP: ~$8.0B royalties + ~$0.4B PRRT · Rio Tinto: ~$3.5B · Fortescue: ~$1.6B</code>
+        <p style="margin-top:0.5rem"><strong>Type:</strong> Resource payments — distinct from taxes borne or taxes collected. Disabled by default.</p>
+      </div>
     </div>
 
     <p style="font-size:0.75rem;color:#7a7a8a;margin-top:1rem;max-width:780px">
@@ -171,6 +180,12 @@
           <input type="checkbox" data-component="land_tax_estimate">
           <span class="toggle-swatch" style="background:#c0392b;border-color:#c0392b"></span>
           <span class="toggle-label">Land tax <span class="est-tag">rough est.</span></span>
+        </label>
+        <label class="tax-toggle resource-toggle"
+          data-tooltip="Royalties + PRRT paid to government as resource owner. NOT a tax. Mining/petroleum companies only.">
+          <input type="checkbox" data-component="resource_payments_to_crown">
+          <span class="toggle-swatch" style="background:#7b3f00;border-color:#7b3f00"></span>
+          <span class="toggle-label">Resource payments to Crown <span class="resource-tag">not a tax</span></span>
         </label>
       </div>
     </div>
@@ -432,6 +447,10 @@
                 data-tooltip="Estimated GST from employee&#10;consumer spending (ABS HES)">
                 GST <small>(est.)</small>
               </th>
+              <th class="num resource-col-header"
+                data-tooltip="Royalties + PRRT paid to government as resource owner.&#10;NOT a tax — distinct from taxes borne/collected.&#10;Mining/petroleum companies only. Source: annual reports.">
+                Resource pmts <small class="resource-tag-sm">not a tax</small>
+              </th>
               <th class="num" data-sort="total_ttc">Total TTC <span class="sort-arrow">▼</span></th>
               <th class="multiplier-cell" data-sort="multiplier">
                 Multiplier <span class="sort-arrow">⇅</span>
@@ -440,7 +459,7 @@
             </tr>
           </thead>
           <tbody id="table-body">
-            <tr><td colspan="10" style="text-align:center;padding:2rem;color:#aaa">Loading…</td></tr>
+            <tr><td colspan="11" style="text-align:center;padding:2rem;color:#aaa">Loading…</td></tr>
           </tbody>
         </table>
       </div>
