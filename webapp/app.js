@@ -660,8 +660,12 @@ function buildTSRChart() {
     maxX = Math.max(maxX, totals.total);
     maxY = Math.max(maxY, cr.total);
   }
-  const axisMaxX = maxX * 1.1;
-  const axisMaxY = maxY * 1.1;
+  // Snap axis ceilings to the next clean $1B boundary with a 5% buffer so
+  // Chart.js tick rounding (e.g. 7.16B → 8B) doesn't add a full extra interval.
+  // Math.ceil(…/1e9)*1e9 gives the next whole-billion above the padded max,
+  // which aligns with Chart.js's natural $1B tick step for these data ranges.
+  const axisMaxX = Math.ceil(maxX * 1.05 / 1e9) * 1e9;
+  const axisMaxY = Math.ceil(maxY * 1.05 / 1e9) * 1e9;
 
   // Parity reference line (Y = X) — clipped to x-axis right edge so it
   // doesn't force Chart.js to expand the x-axis beyond actual TTC data.
@@ -721,13 +725,31 @@ function buildTSRChart() {
   charts.tsr = new Chart(canvas, {
     type: "scatter",
     data: { datasets: [parityDataset, ...companyDatasets] },
-    // Inline plugin: afterDataLimits is a plugin hook, not a scale option.
-    // Placing it inside options.scales.x/y is silently ignored by Chart.js.
+    // Inline plugin to clamp both axes.
+    //
+    // Two hooks are required because Chart.js 4's buildTicks() unconditionally
+    // overwrites scale.max with the last generated tick value:
+    //   scale.max = ticks[ticks.length - 1].value
+    // So afterDataLimits alone is not enough — the tick generator computes
+    // niceMax = Math.ceil(scale.max / step) * step (e.g. 15B → 16B at 2B steps)
+    // and that becomes the new scale.max.  afterBuildTicks fires after that
+    // override and is the last safe place to both strip the extra tick and
+    // re-set scale.max to our desired ceiling.
     plugins: [{
       id: "tsrAxisClamp",
       afterDataLimits(chart, args) {
         if (args.scale.id === "x") args.scale.max = axisMaxX;
         if (args.scale.id === "y") args.scale.max = axisMaxY;
+      },
+      afterBuildTicks(chart, args) {
+        if (args.scale.id === "x") {
+          args.scale.ticks = args.scale.ticks.filter(t => t.value <= axisMaxX);
+          args.scale.max = axisMaxX;
+        }
+        if (args.scale.id === "y") {
+          args.scale.ticks = args.scale.ticks.filter(t => t.value <= axisMaxY);
+          args.scale.max = axisMaxY;
+        }
       },
     }],
     options: {
