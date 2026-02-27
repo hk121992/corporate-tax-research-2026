@@ -452,6 +452,43 @@
       </div>
     </div>
 
+    <!-- CHART 6: TTC vs CAPITAL RETURNS — FULL PERIOD -->
+    <div class="chart-section" id="ratio-trend-section">
+      <div class="section-header">
+        <div>
+          <h2>Government vs Shareholders: Who Captured More — Full Period</h2>
+          <p class="section-desc">
+            Each year: aggregate Total Tax Contribution (blue stacked bars) vs total capital
+            returned to shareholders — dividends plus buybacks (red bars).
+            The orange line shows the ratio of capital returns to TTC; above 1.0×
+            means shareholders collectively received more than the government collected in total tax.
+          </p>
+        </div>
+        <button class="method-btn" data-method-toggle="method-ratio-trend">Show methodology ▼</button>
+      </div>
+      <div id="method-ratio-trend" class="section-method">
+        <strong>TTC (blue):</strong> Aggregate total tax contribution across the top-20 panel for each year —
+        corporate income tax (dark) plus all estimated employment-linked taxes (payroll, income tax withheld, Medicare levy, GST from spending).<br>
+        <strong>Capital returns (red):</strong> Dividends paid plus on/off-market share buybacks, sourced from annual
+        reports and ASX disclosures. Calendar-year reporters (Rio Tinto) use full-year actuals converted at prevailing
+        AUD/USD rates.<br>
+        <strong>Ratio line (orange):</strong> Capital returns ÷ Total TTC. A ratio above 1.0× indicates that the panel
+        returned more to shareholders than it contributed in total tax that year. The dashed line at 1.0× marks parity.<br>
+        <strong>Note:</strong> This chart is fixed across the full five-year period regardless of the year selector above.
+        Resource payments (royalties, PRRT) are excluded from TTC in this view — they are payments to government as
+        resource owner, not taxes, and would inflate the government-capture figure.
+      </div>
+      <div class="chart-body">
+        <div class="chart-container chart-container-trend">
+          <canvas id="chart-ratio-trend"></canvas>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:#999;margin:0.5rem 1rem 0;font-style:italic">
+        Dashed orange line at 1.0× = parity. Above the line: shareholders received more than government collected in TTC.
+        FY2020–21 capital returns spiked due to BHP ($20.1B) and Rio Tinto ($12.5B) distributing iron-ore boom profits.
+      </p>
+    </div>
+
     <!-- DATA TABLE -->
     <div class="table-section">
       <div class="table-header-row">

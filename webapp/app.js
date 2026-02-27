@@ -1100,6 +1100,180 @@ function buildTrendChart() {
 }
 
 /* =====================================================================
+   CHART 6 — TTC vs CAPITAL RETURNS RATIO, FULL PERIOD
+   ===================================================================== */
+
+function buildRatioTrendChart() {
+  const canvas = document.getElementById("chart-ratio-trend");
+  if (!canvas) return;
+
+  const allDatasets = window.__DATASETS__ || {};
+
+  const years  = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"];
+  const labels = ["FY19–20", "FY20–21", "FY21–22", "FY22–23", "FY23–24"];
+
+  const corpData    = [];
+  const empData     = [];
+  const returnsData = [];
+  const ratioData   = [];
+  // Parity reference line (1.0× across all years)
+  const parityLine  = [];
+
+  for (const yr of years) {
+    const ds = allDatasets[`australia_${yr}`];
+    const crTable = CAPITAL_RETURNS_BY_YEAR[yr] || {};
+
+    if (!ds) {
+      corpData.push(null); empData.push(null);
+      returnsData.push(null); ratioData.push(null); parityLine.push(1);
+      continue;
+    }
+
+    let corp = 0, ttc = 0, capRet = 0;
+    for (const c of ds.companies) {
+      corp   += c.taxes_borne?.corporate_income_tax       ?? 0;
+      ttc    += c.totals?.total_ttc_core                  ?? 0;
+      const cr = crTable[c.id] ?? { d: 0, b: 0 };
+      capRet += (cr.d ?? 0) + (cr.b ?? 0);
+    }
+
+    corpData.push(corp / 1e9);
+    empData.push((ttc - corp) / 1e9);
+    returnsData.push(capRet / 1e9);
+    ratioData.push(ttc > 0 ? parseFloat((capRet / ttc).toFixed(3)) : null);
+    parityLine.push(1);
+  }
+
+  if (charts.ratioTrend) charts.ratioTrend.destroy();
+  charts.ratioTrend = new Chart(canvas, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "Corporate income tax",
+          data: corpData,
+          backgroundColor: "#1a3a5c",
+          stack: "ttc",
+          order: 3,
+          yAxisID: "y",
+        },
+        {
+          label: "Employment-linked taxes (est.)",
+          data: empData,
+          backgroundColor: "#4a9fd4",
+          stack: "ttc",
+          order: 3,
+          yAxisID: "y",
+        },
+        {
+          label: "Capital returned to shareholders",
+          data: returnsData,
+          backgroundColor: "rgba(192,57,43,0.55)",
+          borderColor: "#c0392b",
+          borderWidth: 1.5,
+          stack: "returns",
+          order: 3,
+          yAxisID: "y",
+        },
+        {
+          label: "Returns ÷ TTC ratio",
+          data: ratioData,
+          type: "line",
+          borderColor: "#e67e22",
+          backgroundColor: "transparent",
+          borderWidth: 2.5,
+          pointBackgroundColor: "#e67e22",
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          fill: false,
+          tension: 0.3,
+          yAxisID: "y2",
+          order: 1,
+        },
+        {
+          label: "Parity (1.0×)",
+          data: parityLine,
+          type: "line",
+          borderColor: "rgba(180,60,0,0.35)",
+          borderWidth: 1.5,
+          borderDash: [6, 4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
+          yAxisID: "y2",
+          order: 2,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
+          labels: { font: { size: 12 }, boxWidth: 14 },
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const v = ctx.parsed.y;
+              if (v == null) return null;
+              if (ctx.dataset.yAxisID === "y2") {
+                return `  ${ctx.dataset.label}: ${v.toFixed(2)}×`;
+              }
+              return `  ${ctx.dataset.label}: $${v.toFixed(1)}B`;
+            },
+            footer: items => {
+              // Show summary: corp tax vs capital returns ratio
+              const corpItem  = items.find(i => i.dataset.label === "Corporate income tax");
+              const retItem   = items.find(i => i.dataset.label === "Capital returned to shareholders");
+              const ratioItem = items.find(i => i.dataset.label === "Returns ÷ TTC ratio");
+              if (!corpItem || !retItem) return [];
+              const verdict = (ratioItem?.parsed.y ?? 0) > 1
+                ? "Shareholders received more than government"
+                : "Government received more than shareholders";
+              return [`  ${verdict}`];
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          ticks: { font: { size: 12 } },
+        },
+        y: {
+          stacked: false,
+          position: "left",
+          title: { display: true, text: "Value (AUD $B)", font: { size: 12 } },
+          ticks: { callback: v => "$" + v.toFixed(0) + "B" },
+          grid: { color: "rgba(0,0,0,0.05)" },
+        },
+        y2: {
+          position: "right",
+          title: {
+            display: true,
+            text: "Capital Returns ÷ TTC",
+            font: { size: 12 },
+            color: "#e67e22",
+          },
+          ticks: {
+            callback: v => v.toFixed(2) + "×",
+            color: "#e67e22",
+          },
+          grid: { drawOnChartArea: false },
+          min: 0,
+        },
+      },
+    },
+  });
+}
+
+/* =====================================================================
    NARRATIVE CALLOUTS
    ===================================================================== */
 
@@ -1312,6 +1486,7 @@ python pipeline/build_dataset.py</pre>
   refresh();
   renderCallouts();
   buildTrendChart();
+  buildRatioTrendChart();  // full-period chart; built once, not re-built on year switch
 }
 
 function bindControls() {
