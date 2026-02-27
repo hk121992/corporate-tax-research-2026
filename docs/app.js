@@ -1382,15 +1382,6 @@ function bindControls() {
     btn.addEventListener("click", () => switchYear(btn.dataset.year));
   });
 
-  // Present / Tour buttons
-  const btnPresent = document.getElementById("btn-present");
-  if (btnPresent) btnPresent.addEventListener("click", () => {
-    if (window.PresentationController) window.PresentationController.open();
-  });
-  const btnTour = document.getElementById("btn-walkthrough");
-  if (btnTour) btnTour.addEventListener("click", () => {
-    if (window.WalkthroughController) window.WalkthroughController.start();
-  });
 
   // Download CSV
   const dlBtn = document.getElementById("download-csv");
