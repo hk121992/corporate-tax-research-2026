@@ -231,57 +231,60 @@ p:last-child { margin-bottom: 0; }
   color: var(--text-muted);
 }
 
-/* Toggle checkboxes */
+/* Toggle checkboxes — pill-shaped filter buttons */
 .toggle-grid {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  align-items: flex-start;
 }
 
+/* Each toggle is a coloured pill. --c is set inline on the <label>. */
 .tax-toggle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   cursor: pointer;
-  font-size: 0.83rem;
-  color: var(--text);
+  font-size: 0.8rem;
   user-select: none;
-  border-radius: 4px;
-  padding: 2px 4px;
-  margin: -2px -4px;
-  transition: background var(--transition);
+  border-radius: 999px;
+  border: 1.5px solid var(--c, #888);
+  padding: 3px 11px;
+  background: var(--c, #888);
+  color: #fff;
+  transition: filter 0.12s ease, opacity 0.12s ease, box-shadow 0.12s ease;
+  white-space: nowrap;
 }
-.tax-toggle:hover { background: rgba(255,255,255,0.07); }
+/* OFF state: hollow pill, muted */
+.tax-toggle:has(input:not(:checked)) {
+  background: transparent;
+  border-color: rgba(150,150,150,0.45);
+  color: var(--text-muted);
+  opacity: 0.55;
+}
+.tax-toggle:hover {
+  opacity: 1 !important;
+  filter: brightness(1.12);
+  box-shadow: 0 2px 7px rgba(0,0,0,0.18);
+}
 .tax-toggle input[type="checkbox"] { display: none; }
-.toggle-swatch {
-  width: 14px; height: 14px;
-  border-radius: 3px;
-  border: 2px solid;
-  transition: all var(--transition);
-  flex-shrink: 0;
-}
-.tax-toggle input:checked + .toggle-swatch { opacity: 1; }
-.tax-toggle input:not(:checked) + .toggle-swatch { opacity: 0.25; background: transparent !important; }
-/* Dim the label text when toggled off so the off-state is obvious */
-.tax-toggle input:not(:checked) ~ .toggle-label { opacity: 0.4; text-decoration: line-through; }
 .toggle-label { line-height: 1.3; }
 .toggle-label .est-tag {
-  font-size: 0.68rem;
-  color: var(--text-muted);
+  font-size: 0.67rem;
+  opacity: 0.8;
   font-style: italic;
   margin-left: 0.2rem;
 }
 .toggle-label .actual-tag {
-  font-size: 0.68rem;
-  color: var(--green);
-  font-weight: 600;
+  font-size: 0.67rem;
+  font-weight: 700;
+  opacity: 0.9;
   margin-left: 0.2rem;
 }
 .toggle-label .resource-tag {
-  font-size: 0.68rem;
-  color: #7b3f00;
+  font-size: 0.67rem;
   font-weight: 600;
   font-style: italic;
+  opacity: 0.85;
   margin-left: 0.2rem;
 }
 .resource-tag-sm {
@@ -291,10 +294,9 @@ p:last-child { margin-bottom: 0; }
   font-style: italic;
   margin-left: 0.2rem;
 }
+/* Visually separate the non-tax resource row */
 .resource-toggle {
-  border-left: 3px solid #7b3f0040;
-  padding-left: 0.5rem;
-  margin-left: 0.25rem;
+  margin-top: 0.2rem;
 }
 .resource-cell {
   color: #7b3f00;
