@@ -1,0 +1,30 @@
+{
+  "australia": {
+    "year": "2022-23",
+    "notes": "Pre-Stage-3 tax rates. Super rate increased to 10.5% from 1 July 2022. Payroll tax thresholds circa 2022-23.",
+    "corporate_tax_rate": 0.30,
+    "income_tax_brackets": [
+      {"min": 0,      "max": 18200,  "rate": 0.00, "base": 0,     "note": "Tax-free threshold"},
+      {"min": 18201,  "max": 37000,  "rate": 0.19, "base": 0,     "note": "Pre-Stage-3"},
+      {"min": 37001,  "max": 90000,  "rate": 0.325,"base": 3572,  "note": "Pre-Stage-3"},
+      {"min": 90001,  "max": 180000, "rate": 0.37, "base": 20797, "note": "Pre-Stage-3"},
+      {"min": 180001, "max": null,   "rate": 0.45, "base": 54097, "note": "Pre-Stage-3"}
+    ],
+    "medicare_levy_rate": 0.02,
+    "medicare_levy_low_income_threshold": 24276,
+    "superannuation_rate": 0.105,
+    "superannuation_rate_notes": "10.5% from 1 July 2022 through 30 June 2023.",
+    "payroll_tax_by_state": {
+      "NSW": {"rate": 0.0545, "annual_threshold": 1200000, "source": "Revenue NSW 2022-23"},
+      "VIC": {"rate": 0.0485, "annual_threshold": 700000,  "source": "State Revenue Office VIC 2022-23"},
+      "QLD": {"rate": 0.0475, "annual_threshold": 1300000, "source": "Queensland Revenue Office 2022-23"},
+      "WA":  {"rate": 0.055,  "annual_threshold": 1000000, "source": "Revenue WA 2022-23"},
+      "SA":  {"rate": 0.0495, "annual_threshold": 1500000, "source": "Revenue SA 2022-23"},
+      "ACT": {"rate": 0.0685, "annual_threshold": 2000000, "source": "ACT Revenue Office 2022-23"},
+      "NT":  {"rate": 0.055,  "annual_threshold": 2500000, "source": "Territory Revenue Office 2022-23"},
+      "TAS": {"rate": 0.04,   "annual_threshold": 1250000, "source": "State Revenue Office TAS 2022-23"}
+    },
+    "gst_rate": 0.10,
+    "gst_national_coverage_rate": 0.47
+  }
+}
