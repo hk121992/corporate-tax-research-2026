@@ -19,7 +19,7 @@
       body: null,
       bullets: null,
       stat: null,
-      footer: 'Australia\'s 20 Largest Companies · FY2019-20 to FY2023-24'
+      footer: 'Australia\'s 20 Largest Companies · FY2019-20 to FY2023-24 · This is an experimental research project performed with Claude Code'
     },
     {
       id: 'slide-problem',

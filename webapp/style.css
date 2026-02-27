@@ -926,3 +926,21 @@ p:last-child { margin-bottom: 0; }
   .callout { max-width: 100%; }
   .chart-container-trend { height: 260px; }
 }
+
+/* ====================================================================
+   EXPERIMENTAL PROJECT NOTICE
+   ==================================================================== */
+.footer-experimental {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255,255,255,0.07);
+  border-left: 3px solid rgba(100,160,220,0.5);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.8rem;
+  color: rgba(200,220,240,0.8);
+  letter-spacing: 0.01em;
+}
+
+.footer-experimental strong {
+  color: rgba(100,180,255,0.95);
+}
