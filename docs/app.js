@@ -73,6 +73,15 @@ const TAX_COMPONENTS = [
     defaultOn: false,
     tooltip: "ROUGH ESTIMATE — highly variable.\nResidential land tax paid by employees who own property.\nFormula: employees × homeownership_rate × median_land_value × effective_rate.\nDisabled by default.",
   },
+  {
+    id:       "resource_payments_to_crown",
+    label:    "Resource payments to Crown",
+    tag:      "resource",
+    color:    "#7b3f00",
+    category: "resource_payments",
+    defaultOn: false,
+    tooltip:  "Royalties + PRRT paid to government as resource owner.\nNOT a tax — government receives as owner of the resource.\nOnly applies to mining/petroleum companies.\nRoyalties: state-based charges on extracted commodities.\nPRRT: Petroleum Resource Rent Tax on petroleum profits.\nSource: company annual reports FY2023–24.",
+  },
 ];
 
 const INDUSTRY_COLOURS = {
@@ -216,6 +225,8 @@ function computeTotals(company) {
     let val = 0;
     if (comp.category === "taxes_borne") {
       val = company.taxes_borne?.[comp.id] ?? 0;
+    } else if (comp.category === "resource_payments") {
+      val = company.resource_payments_to_crown?.total ?? 0;
     } else {
       val = company.taxes_collected?.[comp.id] ?? 0;
     }
@@ -236,6 +247,7 @@ function computeTotals(company) {
 
 function fmtBillions(v) {
   if (v == null) return "—";
+  if (v === 0)   return "$0";
   const b = v / 1e9;
   if (b >= 10)  return "$" + b.toFixed(1) + "B";
   if (b >= 1)   return "$" + b.toFixed(2) + "B";
@@ -639,19 +651,28 @@ function buildTSRChart() {
     byIndustry[ind].push(c);
   }
 
-  // Determine axis range for parity line
-  let maxVal = 0;
+  // Determine axis ranges independently so x-axis isn't inflated by y-axis outliers
+  let maxX = 0;
+  let maxY = 0;
   for (const c of filteredCompanies) {
     const totals = computeTotals(c);
     const cr = getCapitalReturns(c);
-    maxVal = Math.max(maxVal, totals.total, cr.total);
+    maxX = Math.max(maxX, totals.total);
+    maxY = Math.max(maxY, cr.total);
   }
+  // Snap axis ceilings to the next clean $1B boundary with a 5% buffer so
+  // Chart.js tick rounding (e.g. 7.16B → 8B) doesn't add a full extra interval.
+  // Math.ceil(…/1e9)*1e9 gives the next whole-billion above the padded max,
+  // which aligns with Chart.js's natural $1B tick step for these data ranges.
+  const axisMaxX = Math.ceil(maxX * 1.05 / 1e9) * 1e9;
+  const axisMaxY = Math.ceil(maxY * 1.05 / 1e9) * 1e9;
 
-  // Parity reference line (Y = X)
+  // Parity reference line (Y = X) — clipped to x-axis right edge so it
+  // doesn't force Chart.js to expand the x-axis beyond actual TTC data.
   const parityDataset = {
     type: "line",
     label: "Parity (Tax = Returns)",
-    data: [{ x: 0, y: 0 }, { x: maxVal * 1.08, y: maxVal * 1.08 }],
+    data: [{ x: 0, y: 0 }, { x: axisMaxX, y: axisMaxX }],
     borderColor: "rgba(80,80,80,0.22)",
     borderDash: [8, 4],
     borderWidth: 1.5,
@@ -704,6 +725,33 @@ function buildTSRChart() {
   charts.tsr = new Chart(canvas, {
     type: "scatter",
     data: { datasets: [parityDataset, ...companyDatasets] },
+    // Inline plugin to clamp both axes.
+    //
+    // Two hooks are required because Chart.js 4's buildTicks() unconditionally
+    // overwrites scale.max with the last generated tick value:
+    //   scale.max = ticks[ticks.length - 1].value
+    // So afterDataLimits alone is not enough — the tick generator computes
+    // niceMax = Math.ceil(scale.max / step) * step (e.g. 15B → 16B at 2B steps)
+    // and that becomes the new scale.max.  afterBuildTicks fires after that
+    // override and is the last safe place to both strip the extra tick and
+    // re-set scale.max to our desired ceiling.
+    plugins: [{
+      id: "tsrAxisClamp",
+      afterDataLimits(chart, args) {
+        if (args.scale.id === "x") args.scale.max = axisMaxX;
+        if (args.scale.id === "y") args.scale.max = axisMaxY;
+      },
+      afterBuildTicks(chart, args) {
+        if (args.scale.id === "x") {
+          args.scale.ticks = args.scale.ticks.filter(t => t.value <= axisMaxX);
+          args.scale.max = axisMaxX;
+        }
+        if (args.scale.id === "y") {
+          args.scale.ticks = args.scale.ticks.filter(t => t.value <= axisMaxY);
+          args.scale.max = axisMaxY;
+        }
+      },
+    }],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -791,6 +839,11 @@ function buildTable() {
       <td class="num">${fmtBillions(t.values.employer_payroll_tax)}</td>
       <td class="num">${fmtBillions((t.values.employee_income_tax_withheld ?? 0) + (t.values.employee_medicare_levy ?? 0))}</td>
       <td class="num">${fmtBillions(t.values.employee_gst_spending_estimate)}</td>
+      <td class="num resource-cell">${
+        c.resource_payments_to_crown?.is_applicable
+          ? `<span title="Royalties: ${fmtBillions(c.resource_payments_to_crown.royalties)} · PRRT: ${fmtBillions(c.resource_payments_to_crown.prrt)}">${fmtBillions(c.resource_payments_to_crown.total)}</span>`
+          : '<span class="text-muted">—</span>'
+      }</td>
       <td class="num num-highlight">${fmtBillions(t.total)}</td>
       <td class="multiplier-cell">
         <div class="multiplier-bar-wrap">
@@ -864,8 +917,9 @@ function updateLegend() {
       <div class="legend-item" style="opacity:${active ? 1 : 0.4}">
         <div class="legend-swatch" style="background:${comp.color}"></div>
         <span>${comp.label}</span>
-        ${comp.tag === "actual" ? '<span style="font-size:.65rem;color:#155724;font-weight:700"> ATO</span>' : ""}
-        ${comp.tag === "rough"  ? '<span style="font-size:.65rem;color:#856404;font-weight:700"> rough</span>' : ""}
+        ${comp.tag === "actual"   ? '<span style="font-size:.65rem;color:#155724;font-weight:700"> ATO</span>' : ""}
+        ${comp.tag === "rough"    ? '<span style="font-size:.65rem;color:#856404;font-weight:700"> rough</span>' : ""}
+        ${comp.tag === "resource" ? '<span style="font-size:.65rem;color:#7b3f00;font-weight:700"> not a tax</span>' : ""}
       </div>`;
   }).join("");
 }
@@ -897,6 +951,7 @@ function downloadCSV() {
     "Revenue (AUD)", "Corp Tax (AUD)", "Payroll Tax est (AUD)",
     "Employee Income Tax est (AUD)", "Medicare est (AUD)",
     "GST from Spending est (AUD)", "Land Tax est (AUD)",
+    "Royalties paid to Crown (AUD)", "PRRT paid to Crown (AUD)",
     "Total TTC (AUD)", "Employment Multiplier", "Revenue per Employee (AUD)",
     "Corp Tax Source",
   ];
@@ -917,6 +972,8 @@ function downloadCSV() {
       c.taxes_collected?.employee_medicare_levy ?? "",
       c.taxes_collected?.employee_gst_spending_estimate ?? "",
       c.taxes_borne?.land_tax_estimate ?? "",
+      c.resource_payments_to_crown?.royalties ?? "",
+      c.resource_payments_to_crown?.prrt ?? "",
       t.total,
       t.multiplier != null ? t.multiplier.toFixed(3) : "",
       c.metrics?.revenue_per_employee_aud ?? "",

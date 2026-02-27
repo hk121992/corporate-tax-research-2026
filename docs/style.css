@@ -270,6 +270,36 @@ p:last-child { margin-bottom: 0; }
   font-weight: 600;
   margin-left: 0.2rem;
 }
+.toggle-label .resource-tag {
+  font-size: 0.68rem;
+  color: #7b3f00;
+  font-weight: 600;
+  font-style: italic;
+  margin-left: 0.2rem;
+}
+.resource-tag-sm {
+  font-size: 0.65rem;
+  color: #7b3f00;
+  font-weight: 600;
+  font-style: italic;
+  margin-left: 0.2rem;
+}
+.resource-toggle {
+  border-left: 3px solid #7b3f0040;
+  padding-left: 0.5rem;
+  margin-left: 0.25rem;
+}
+.resource-cell {
+  color: #7b3f00;
+  font-style: italic;
+}
+.resource-col-header {
+  color: #7b3f00;
+}
+.method-card-resource {
+  border-top: 3px solid #7b3f00;
+  background: #fdf8f5;
+}
 
 /* Select dropdowns */
 .controls-select {
