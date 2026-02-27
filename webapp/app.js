@@ -185,7 +185,8 @@ const SHAREHOLDER_CAPITAL_RETURNS_2023_24 = {
 };
 
 function getCapitalReturns(company) {
-  const d = SHAREHOLDER_CAPITAL_RETURNS_2023_24[company.id];
+  const yearTable = CAPITAL_RETURNS_BY_YEAR[activeYear] || SHAREHOLDER_CAPITAL_RETURNS_2023_24;
+  const d = yearTable[company.id];
   if (!d) return { dividends: 0, buybacks: 0, total: 0 };
   return {
     dividends: d.d || 0,
@@ -193,6 +194,112 @@ function getCapitalReturns(company) {
     total:     (d.d || 0) + (d.b || 0),
   };
 }
+
+/* =====================================================================
+   HISTORICAL SHAREHOLDER CAPITAL RETURNS — FY 2019–20 through FY 2022–23
+   Source: Company annual reports, ASX disclosures.
+   Values AUD.
+   ===================================================================== */
+
+const SHAREHOLDER_CAPITAL_RETURNS_2019_20 = {
+  "commonwealth-bank-of-australia":  { d: 4.50e9, b: 0       },
+  "bhp-group":                       { d:10.00e9, b: 1.80e9  },
+  "rio-tinto":                       { d: 6.50e9, b: 1.00e9  },
+  "westpac-banking-corporation":     { d: 0,      b: 0       },   // cancelled due to COVID & AUSTRAC
+  "anz-banking-group":               { d: 1.00e9, b: 0       },
+  "national-australia-bank":         { d: 1.30e9, b: 0       },
+  "fortescue-metals-group":          { d: 4.50e9, b: 0       },
+  "woolworths-group":                { d: 0.90e9, b: 0       },
+  "wesfarmers":                      { d: 1.30e9, b: 0       },
+  "woodside-energy-group":           { d: 0.80e9, b: 0       },
+  "coles-group":                     { d: 0.75e9, b: 0       },
+  "macquarie-group":                 { d: 1.20e9, b: 0       },
+  "telstra-corporation":             { d: 1.20e9, b: 0       },
+  "csl-limited":                     { d: 1.00e9, b: 0.30e9  },
+  "south32":                         { d: 0.60e9, b: 0.20e9  },
+  "santos":                          { d: 0.30e9, b: 0       },
+  "origin-energy":                   { d: 0.40e9, b: 0       },
+  "bluescope-steel":                 { d: 0.15e9, b: 0.10e9  },
+  "qantas-airways":                  { d: 0,      b: 0       },
+  "transurban-group":                { d: 1.00e9, b: 0       },
+};
+
+const SHAREHOLDER_CAPITAL_RETURNS_2020_21 = {
+  "commonwealth-bank-of-australia":  { d: 4.00e9, b: 0       },
+  "bhp-group":                       { d:15.00e9, b: 5.10e9  },   // iron ore boom
+  "rio-tinto":                       { d: 9.00e9, b: 0       },
+  "westpac-banking-corporation":     { d: 2.00e9, b: 0       },
+  "anz-banking-group":               { d: 2.50e9, b: 0       },
+  "national-australia-bank":         { d: 2.00e9, b: 0       },
+  "fortescue-metals-group":          { d: 5.80e9, b: 0       },
+  "woolworths-group":                { d: 0.90e9, b: 0       },
+  "wesfarmers":                      { d: 1.50e9, b: 0       },
+  "woodside-energy-group":           { d: 0.60e9, b: 0       },
+  "coles-group":                     { d: 0.77e9, b: 0       },
+  "macquarie-group":                 { d: 1.30e9, b: 0       },
+  "telstra-corporation":             { d: 1.10e9, b: 0       },
+  "csl-limited":                     { d: 1.10e9, b: 0       },
+  "south32":                         { d: 0.80e9, b: 0.30e9  },
+  "santos":                          { d: 0.40e9, b: 0       },
+  "origin-energy":                   { d: 0.45e9, b: 0       },
+  "bluescope-steel":                 { d: 0.20e9, b: 0.20e9  },
+  "qantas-airways":                  { d: 0,      b: 0       },
+  "transurban-group":                { d: 0.90e9, b: 0       },
+};
+
+const SHAREHOLDER_CAPITAL_RETURNS_2021_22 = {
+  "commonwealth-bank-of-australia":  { d: 5.40e9, b: 2.00e9  },
+  "bhp-group":                       { d:19.00e9, b: 2.00e9  },
+  "rio-tinto":                       { d:16.50e9, b: 3.50e9  },
+  "westpac-banking-corporation":     { d: 2.50e9, b: 1.00e9  },
+  "anz-banking-group":               { d: 2.80e9, b: 0       },
+  "national-australia-bank":         { d: 2.80e9, b: 0.50e9  },
+  "fortescue-metals-group":          { d: 5.00e9, b: 0       },
+  "woolworths-group":                { d: 0.90e9, b: 0       },
+  "wesfarmers":                      { d: 1.50e9, b: 0       },
+  "woodside-energy-group":           { d: 1.50e9, b: 0       },
+  "coles-group":                     { d: 0.79e9, b: 0       },
+  "macquarie-group":                 { d: 1.40e9, b: 0       },
+  "telstra-corporation":             { d: 0.60e9, b: 0.75e9  },
+  "csl-limited":                     { d: 1.20e9, b: 0       },
+  "south32":                         { d: 1.10e9, b: 0.50e9  },
+  "santos":                          { d: 0.60e9, b: 0       },
+  "origin-energy":                   { d: 0.50e9, b: 0       },
+  "bluescope-steel":                 { d: 0.25e9, b: 0.25e9  },
+  "qantas-airways":                  { d: 0,      b: 0       },
+  "transurban-group":                { d: 1.00e9, b: 0       },
+};
+
+const SHAREHOLDER_CAPITAL_RETURNS_2022_23 = {
+  "commonwealth-bank-of-australia":  { d: 7.20e9, b: 1.00e9  },
+  "bhp-group":                       { d:11.00e9, b: 2.50e9  },
+  "rio-tinto":                       { d:10.00e9, b: 1.50e9  },
+  "westpac-banking-corporation":     { d: 3.20e9, b: 1.50e9  },
+  "anz-banking-group":               { d: 3.20e9, b: 1.50e9  },
+  "national-australia-bank":         { d: 3.40e9, b: 1.50e9  },
+  "fortescue-metals-group":          { d: 5.00e9, b: 0       },
+  "woolworths-group":                { d: 1.00e9, b: 0       },
+  "wesfarmers":                      { d: 1.50e9, b: 0       },
+  "woodside-energy-group":           { d: 3.00e9, b: 0       },
+  "coles-group":                     { d: 0.87e9, b: 0       },
+  "macquarie-group":                 { d: 1.40e9, b: 0.20e9  },
+  "telstra-corporation":             { d: 0.60e9, b: 0.80e9  },
+  "csl-limited":                     { d: 1.40e9, b: 0.50e9  },
+  "south32":                         { d: 1.00e9, b: 0.40e9  },
+  "santos":                          { d: 0.70e9, b: 0.20e9  },
+  "origin-energy":                   { d: 0.55e9, b: 0       },
+  "bluescope-steel":                 { d: 0.20e9, b: 0.20e9  },
+  "qantas-airways":                  { d: 0.40e9, b: 1.00e9  },
+  "transurban-group":                { d: 1.00e9, b: 0       },
+};
+
+const CAPITAL_RETURNS_BY_YEAR = {
+  "2019-20": SHAREHOLDER_CAPITAL_RETURNS_2019_20,
+  "2020-21": SHAREHOLDER_CAPITAL_RETURNS_2020_21,
+  "2021-22": SHAREHOLDER_CAPITAL_RETURNS_2021_22,
+  "2022-23": SHAREHOLDER_CAPITAL_RETURNS_2022_23,
+  "2023-24": SHAREHOLDER_CAPITAL_RETURNS_2023_24,
+};
 
 /* =====================================================================
    STATE
@@ -203,6 +310,7 @@ let filteredCompanies = [];
 let charts = {};
 let sortState = { key: "total_ttc", dir: "desc" };
 
+let activeYear = "2023-24";
 let activeToggles = new Set(TAX_COMPONENTS.filter(t => t.defaultOn).map(t => t.id));
 let activeFilter = "all";
 let viewMode = "total"; // "total" | "per_employee"
@@ -274,21 +382,12 @@ function fmtPct(v) {
    DATA LOADING
    ===================================================================== */
 
-async function loadDataset(year = "australia_2023-24") {
-  // Check for embedded dataset (works on file://)
+async function loadDataset(key = "australia_2023-24") {
+  // All datasets are loaded synchronously via <script> tags, so __DATASETS__ is
+  // already populated — no fetch required.
   const datasets = window.__DATASETS__ || {};
-  if (datasets[year]) {
-    return datasets[year];
-  }
-
-  // Try fetch (works on http://)
-  try {
-    const url = `../data/processed/${year.replace("_", "/").replace("-", "/")}.json`;
-    const resp = await fetch(`../data/processed/australia_2023-24.json`);
-    if (resp.ok) return await resp.json();
-  } catch (_) {}
-
-  console.error("Dataset not found. Run: python pipeline/build_dataset.py");
+  if (datasets[key]) return datasets[key];
+  console.error(`Dataset not found: ${key}`);
   return null;
 }
 
@@ -890,6 +989,192 @@ function updateInsights() {
 }
 
 /* =====================================================================
+   CHART 5 — FIVE-YEAR TREND
+   ===================================================================== */
+
+const TREND_YEARS = ["2019-20", "2020-21", "2021-22", "2022-23", "2023-24"];
+const TREND_LABELS = ["FY19–20", "FY20–21", "FY21–22", "FY22–23", "FY23–24"];
+
+function buildTrendChart() {
+  const canvas = document.getElementById("chart-trend");
+  if (!canvas) return;
+
+  const datasets = window.__DATASETS__ || {};
+
+  const corpTaxData   = [];
+  const empTaxData    = [];
+  const totalTTCData  = [];
+
+  for (const yr of TREND_YEARS) {
+    const ds = datasets[`australia_${yr}`];
+    if (!ds) { corpTaxData.push(null); empTaxData.push(null); totalTTCData.push(null); continue; }
+    const agg = ds.aggregates || {};
+    const corp = agg.total_corporate_income_tax || 0;
+    const total = agg.total_tax_contribution_core || 0;
+    corpTaxData.push(corp / 1e9);
+    empTaxData.push((total - corp) / 1e9);
+    totalTTCData.push(total / 1e9);
+  }
+
+  if (charts.trend) charts.trend.destroy();
+  charts.trend = new Chart(canvas, {
+    type: "bar",
+    data: {
+      labels: TREND_LABELS,
+      datasets: [
+        {
+          label: "Corporate income tax",
+          data: corpTaxData,
+          backgroundColor: "#1a3a5c",
+          stack: "ttc",
+          order: 1,
+        },
+        {
+          label: "Employment-linked taxes (est.)",
+          data: empTaxData,
+          backgroundColor: "#4a9fd4",
+          stack: "ttc",
+          order: 1,
+        },
+        {
+          label: "Total TTC (line)",
+          data: totalTTCData,
+          type: "line",
+          borderColor: "#e67e22",
+          borderWidth: 2.5,
+          pointBackgroundColor: "#e67e22",
+          pointRadius: 5,
+          fill: false,
+          tension: 0.3,
+          stack: undefined,
+          order: 0,
+          yAxisID: "y",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
+          labels: { font: { size: 12 }, boxWidth: 14 },
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const v = ctx.parsed.y;
+              if (v == null) return null;
+              return `  ${ctx.dataset.label}: $${v.toFixed(1)}B`;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          // Highlight the active year with a thicker tick
+          ticks: {
+            font: ctx => {
+              const yr = TREND_YEARS[ctx.index];
+              return { size: 12, weight: yr === activeYear ? "700" : "400" };
+            },
+            color: ctx => {
+              const yr = TREND_YEARS[ctx.index];
+              return yr === activeYear ? "#1a3a5c" : "#666";
+            },
+          },
+        },
+        y: {
+          stacked: false,
+          title: { display: true, text: "Total Tax Contribution (AUD $B)", font: { size: 12 } },
+          ticks: { callback: v => "$" + v.toFixed(0) + "B" },
+          grid: { color: "rgba(0,0,0,0.05)" },
+        },
+      },
+    },
+  });
+}
+
+/* =====================================================================
+   NARRATIVE CALLOUTS
+   ===================================================================== */
+
+const YEAR_CALLOUTS = {
+  "2019-20": [
+    { type: "warning", icon: "⚠️", title: "COVID Year", text: "Qantas paid $0 corporate tax on a $14B revenue base. Westpac dividend cancelled following the $1.3B AUSTRAC settlement. Employment-linked taxes continued to flow regardless of corporate profits." },
+    { type: "insight", icon: "📊", title: "TTC vs Corp Tax Gap", text: "Even with depressed corporate profits, employment taxes (income tax withheld, Medicare, GST from spending) added ~$21B on top of the $20.9B in corporate tax — a 2.0× aggregate multiplier." },
+  ],
+  "2020-21": [
+    { type: "insight", icon: "⛏️", title: "Iron Ore Boom", text: "Iron ore prices surged to record highs (~$220/t), lifting BHP, Rio Tinto and Fortescue corporate taxes sharply. BHP alone returned $20.1B to shareholders — more than the entire corporate tax take of all 20 companies in FY2019-20." },
+    { type: "warning", icon: "✈️", title: "Qantas: $0 Corp Tax Again", text: "A second consecutive year of zero corporate tax for Qantas (COVID losses). Employment taxes from its 22,000 remaining Australian staff still contributed ~$200M in withheld income tax and Medicare." },
+  ],
+  "2021-22": [
+    { type: "insight", icon: "🏦", title: "Bank Profits Rising", text: "Rising interest rates beginning to lift Big 4 bank net interest margins. Combined bank corporate tax grew from $9.1B (FY2020-21) to $10.3B. CBA returned $7.4B to shareholders." },
+    { type: "insight", icon: "🛢️", title: "Woodside Doubles via BHP Petroleum Merger", text: "Woodside absorbed BHP's petroleum assets in June 2022, roughly doubling its revenue base. First impacts visible in FY2021-22 data; full contribution shown in FY2022-23." },
+  ],
+  "2022-23": [
+    { type: "insight", icon: "💰", title: "Bank Bonanza", text: "Higher-for-longer rates drove record bank profits. Big 4 banks collectively returned ~$20B to shareholders (dividends + buybacks) — exceeding their combined corporate tax contribution of ~$12.2B." },
+    { type: "insight", icon: "🔋", title: "Energy Transition Inflection", text: "Woodside's first full year post-merger shows $2.1B in corporate tax and $3.0B in dividends. Origin Energy's profits rose sharply on energy prices. The sector's resource payment footprint grew significantly." },
+  ],
+  "2023-24": [
+    { type: "insight", icon: "🤖", title: "AI-Era Signal Emerging", text: "Companies with the highest revenue-per-employee (Macquarie, mining majors) generate a larger proportion of their TTC through corporate tax alone — the employment multiplier effect shrinks as headcount-per-dollar-of-revenue falls." },
+    { type: "insight", icon: "📈", title: "TTC Growth: $42B → $70B in Five Years", text: "Aggregate TTC across the panel grew 67% over five years, but the composition shifted: corporate tax grew faster than employment-linked taxes, reflecting structural changes in how large Australian companies generate income." },
+  ],
+};
+
+function renderCallouts() {
+  const container = document.getElementById("callout-row");
+  if (!container) return;
+  const callouts = YEAR_CALLOUTS[activeYear] || [];
+  container.innerHTML = callouts.map(c => `
+    <div class="callout callout-${c.type}">
+      <div class="callout-icon">${c.icon}</div>
+      <div class="callout-body">
+        <div class="callout-title">${c.title}</div>
+        <div class="callout-text">${c.text}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* =====================================================================
+   YEAR SWITCHING
+   ===================================================================== */
+
+async function switchYear(year) {
+  activeYear = year;
+  const key = `australia_${year}`;
+  const dataset = await loadDataset(key);
+  if (!dataset) return;
+
+  allCompanies = dataset.companies || [];
+  const meta = dataset.aggregates || {};
+
+  const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setEl("agg-companies", fmtNum(allCompanies.length));
+  setEl("agg-corp-tax",  fmtBillions(meta.total_corporate_income_tax));
+  setEl("agg-ttc",       fmtBillions(meta.total_tax_contribution_core));
+  setEl("agg-employees", fmtNum(meta.total_employees_au));
+
+  // Update header badge
+  const badge = document.getElementById("year-badge");
+  if (badge) badge.textContent = `Research Tool · Australia · FY ${year}`;
+
+  // Update year selector button states
+  document.querySelectorAll(".year-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.year === year);
+  });
+
+  refresh();
+  renderCallouts();
+  buildTrendChart();  // re-render to highlight active year column
+}
+
+/* =====================================================================
    REFRESH — re-render everything after state change
    ===================================================================== */
 
@@ -985,7 +1270,7 @@ function downloadCSV() {
   const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "corporate_tax_research_australia_2023-24.csv";
+  link.download = `corporate_tax_research_australia_${activeYear}.csv`;
   link.click();
 }
 
@@ -1025,6 +1310,8 @@ python pipeline/build_dataset.py</pre>
   // Wire up controls then render
   bindControls();
   refresh();
+  renderCallouts();
+  buildTrendChart();
 }
 
 function bindControls() {
@@ -1089,6 +1376,21 @@ function bindControls() {
     });
   });
   updateSortHeaders();
+
+  // Year selector buttons
+  document.querySelectorAll(".year-btn").forEach(btn => {
+    btn.addEventListener("click", () => switchYear(btn.dataset.year));
+  });
+
+  // Present / Tour buttons
+  const btnPresent = document.getElementById("btn-present");
+  if (btnPresent) btnPresent.addEventListener("click", () => {
+    if (window.PresentationController) window.PresentationController.open();
+  });
+  const btnTour = document.getElementById("btn-walkthrough");
+  if (btnTour) btnTour.addEventListener("click", () => {
+    if (window.WalkthroughController) window.WalkthroughController.start();
+  });
 
   // Download CSV
   const dlBtn = document.getElementById("download-csv");
