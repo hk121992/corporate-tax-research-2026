@@ -247,6 +247,7 @@ function computeTotals(company) {
 
 function fmtBillions(v) {
   if (v == null) return "—";
+  if (v === 0)   return "$0";
   const b = v / 1e9;
   if (b >= 10)  return "$" + b.toFixed(1) + "B";
   if (b >= 1)   return "$" + b.toFixed(2) + "B";
