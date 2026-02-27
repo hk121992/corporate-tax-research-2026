@@ -721,6 +721,15 @@ function buildTSRChart() {
   charts.tsr = new Chart(canvas, {
     type: "scatter",
     data: { datasets: [parityDataset, ...companyDatasets] },
+    // Inline plugin: afterDataLimits is a plugin hook, not a scale option.
+    // Placing it inside options.scales.x/y is silently ignored by Chart.js.
+    plugins: [{
+      id: "tsrAxisClamp",
+      afterDataLimits(chart, args) {
+        if (args.scale.id === "x") args.scale.max = axisMaxX;
+        if (args.scale.id === "y") args.scale.max = axisMaxY;
+      },
+    }],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -755,17 +764,12 @@ function buildTSRChart() {
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
-          // afterDataLimits overrides Chart.js's internal auto-range computation
-          // (which ignores max/min on mixed scatter+line charts) to enforce the
-          // correct x-axis ceiling based on actual TTC data, not the y-axis range.
-          afterDataLimits: scale => { scale.max = axisMaxX; },
         },
         y: {
           title: { display: true, text: "Capital Returned to Shareholders (Dividends + Buybacks) — AUD", font: { size: 12 } },
           ticks: { callback: v => fmtBillions(v) },
           grid: { color: "rgba(0,0,0,0.05)" },
           min: 0,
-          afterDataLimits: scale => { scale.max = axisMaxY; },
         },
       },
     },
