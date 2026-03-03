@@ -142,8 +142,31 @@
 <!-- ===================================================================
      CONTROLS PANEL (sticky)
      =================================================================== -->
-<div class="controls-section">
+<div class="controls-section" id="controls-section">
+  <!-- Mobile-only toggle — hidden on desktop via CSS -->
+  <button class="controls-mobile-toggle" id="controls-mobile-toggle" aria-expanded="false" aria-controls="controls-body">
+    <span class="controls-toggle-label">⚙ Filters &amp; Options</span>
+    <span class="controls-toggle-icon" aria-hidden="true">▼</span>
+  </button>
+
+  <div class="controls-body" id="controls-body">
   <div class="controls-inner">
+
+    <!-- Year selector — first on mobile (most used control) -->
+    <div class="controls-group controls-group-year">
+      <div class="controls-group-label">Financial Year</div>
+      <div class="year-selector" role="group" aria-label="Select financial year">
+        <button class="year-btn" data-year="2019-20">FY19–20</button>
+        <button class="year-btn" data-year="2020-21">FY20–21</button>
+        <button class="year-btn" data-year="2021-22">FY21–22</button>
+        <button class="year-btn" data-year="2022-23">FY22–23</button>
+        <button class="year-btn active" data-year="2023-24">FY23–24</button>
+      </div>
+      <div class="year-action-row">
+        <button class="action-link-btn" id="btn-present" title="Open presentation mode">▶ Present</button>
+        <button class="action-link-btn" id="btn-walkthrough" title="Start guided tour">⊙ Tour</button>
+      </div>
+    </div>
 
     <!-- Tax component toggles -->
     <div class="controls-group">
@@ -209,22 +232,6 @@
       </select>
     </div>
 
-    <!-- Year selector -->
-    <div class="controls-group">
-      <div class="controls-group-label">Financial Year</div>
-      <div class="year-selector" role="group" aria-label="Select financial year">
-        <button class="year-btn" data-year="2019-20">FY19–20</button>
-        <button class="year-btn" data-year="2020-21">FY20–21</button>
-        <button class="year-btn" data-year="2021-22">FY21–22</button>
-        <button class="year-btn" data-year="2022-23">FY22–23</button>
-        <button class="year-btn active" data-year="2023-24">FY23–24</button>
-      </div>
-      <div class="year-action-row">
-        <button class="action-link-btn" id="btn-present" title="Open presentation mode">▶ Present</button>
-        <button class="action-link-btn" id="btn-walkthrough" title="Start guided tour">⊙ Tour</button>
-      </div>
-    </div>
-
     <!-- View options -->
     <div class="controls-group">
       <div class="controls-group-label">Bar Chart View</div>
@@ -241,6 +248,7 @@
     </div>
 
   </div>
+  </div><!-- /controls-body -->
 </div>
 
 <!-- ===================================================================

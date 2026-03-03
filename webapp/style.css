@@ -744,24 +744,143 @@ p:last-child { margin-bottom: 0; }
 .industry-Other          { background: var(--grey-200); color: var(--grey-700); }
 
 /* ====================================================================
-   RESPONSIVE
+   MOBILE CONTROLS TOGGLE (hidden on desktop)
    ==================================================================== */
-@media (max-width: 768px) {
-  .controls-inner { flex-direction: column; padding: 0.75rem 1rem; }
-  .controls-group { min-width: 100%; }
-  .chart-body { padding: 1rem; }
-  .chart-container-bar { height: 320px; }
-  .chart-container-scatter { height: 320px; }
-  .section-header { flex-direction: column; }
-  .insight-grid { grid-template-columns: repeat(2, 1fr); padding: 1rem; gap: 0.75rem; }
-  .insight-card .insight-value { font-size: 1.4rem; }
-  .header-stats { gap: 0.75rem; }
+.controls-mobile-toggle {
+  display: none;
 }
 
+/* ====================================================================
+   RESPONSIVE — tablet (≤ 768px)
+   ==================================================================== */
+@media (max-width: 768px) {
+  /* --- Header --- */
+  .site-header { padding: 1.25rem 0 1rem; }
+  .site-header h1 { font-size: 1.35rem; line-height: 1.3; }
+  .header-subtitle { font-size: 0.88rem; line-height: 1.6; }
+  .header-stats { gap: 0.6rem; flex-wrap: wrap; }
+  .stat-pill { padding: 0.45rem 0.8rem; }
+  .stat-pill .stat-value { font-size: 1.2rem; }
+  .stat-pill .stat-label { font-size: 0.68rem; }
+
+  /* --- Methodology banner --- */
+  .methodology-toggle { font-size: 0.82rem; }
+
+  /* --- Controls: mobile collapse toggle --- */
+  .controls-mobile-toggle {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .controls-mobile-toggle:active { background: var(--grey-100); }
+  .controls-toggle-icon { transition: transform 0.2s ease; font-size: 0.65rem; }
+  .controls-mobile-toggle[aria-expanded="true"] .controls-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Controls body: hidden until user taps the toggle */
+  .controls-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.28s ease;
+  }
+  .controls-body.controls-open {
+    max-height: 1200px;
+  }
+
+  /* Controls inner layout */
+  .controls-inner { flex-direction: column; gap: 0; padding: 0; }
+  .controls-group {
+    min-width: 100%;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--grey-100);
+    gap: 0.4rem;
+  }
+  .controls-group:last-child { border-bottom: none; }
+
+  /* Toggle grid */
+  .toggle-grid { gap: 0.4rem; }
+  .tax-toggle { padding: 0.35rem 0.7rem; font-size: 0.77rem; }
+
+  /* Charts */
+  .chart-body { padding: 0.75rem; }
+  .chart-container-bar     { height: 260px; }
+  .chart-container-scatter { height: 260px; }
+  .chart-container-trend   { height: 240px; }
+  .chart-section { margin-bottom: 1rem; }
+  .section-header { flex-direction: column; gap: 0.5rem; }
+  .section-header h2 { font-size: 1rem; }
+  .section-desc { font-size: 0.82rem; }
+
+  /* Key findings grid: 2 columns */
+  .insight-grid { grid-template-columns: 1fr 1fr; padding: 0.75rem; gap: 0.6rem; }
+  .insight-card { padding: 0.7rem 0.8rem; }
+  .insight-card .insight-value { font-size: 1.25rem; }
+  .insight-card .insight-label { font-size: 0.72rem; }
+
+  /* Data table: horizontal scroll + sticky first column */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100vw; }
+  .data-table { min-width: 660px; font-size: 0.78rem; }
+  .data-table th, .data-table td { padding: 0.45rem 0.55rem; }
+  .company-cell { min-width: 120px; max-width: 140px; }
+  .company-name { font-size: 0.78rem; white-space: normal; word-break: break-word; }
+  .data-table thead th:first-child,
+  .data-table tbody td:first-child {
+    position: sticky;
+    left: 0;
+    background: #fff;
+    z-index: 2;
+    box-shadow: 2px 0 4px rgba(0,0,0,0.06);
+  }
+  .data-table thead th:first-child { background: var(--navy); }
+  /* Hide resource payments column (least important on small screens) */
+  .resource-col-header, .resource-cell { display: none; }
+
+  /* Callouts */
+  .callout-row { flex-direction: column; gap: 0.75rem; padding-bottom: 1rem; }
+  .callout { max-width: 100%; padding: 0.8rem 0.9rem; }
+  .callout-text { font-size: 0.79rem; }
+
+  /* Footer */
+  .site-footer { padding: 1.5rem 0; }
+  .sources-list { font-size: 0.78rem; }
+  .footer-disclaimer { font-size: 0.74rem; }
+  .footer-experimental { font-size: 0.76rem; }
+}
+
+/* ====================================================================
+   RESPONSIVE — phone (≤ 480px)
+   ==================================================================== */
 @media (max-width: 480px) {
-  .site-header { padding: 1.5rem 0 1.25rem; }
-  .insight-grid { grid-template-columns: 1fr 1fr; }
-  .stat-pill .stat-value { font-size: 1.1rem; }
+  .site-header { padding: 1rem 0 0.75rem; }
+  .site-header h1 { font-size: 1.15rem; }
+  /* Hide verbose subtitle on small phones — title + stats are enough */
+  .header-subtitle { font-size: 0.82rem; line-height: 1.5; }
+  .stat-pill .stat-value { font-size: 1.05rem; }
+  .stat-pill .stat-label { font-size: 0.63rem; }
+
+  .insight-grid { grid-template-columns: 1fr 1fr; padding: 0.6rem; gap: 0.5rem; }
+  .insight-card .insight-value { font-size: 1.05rem; }
+
+  .chart-container-bar     { height: 230px; }
+  .chart-container-scatter { height: 220px; }
+  .chart-container-trend   { height: 200px; }
+
+  .year-btn { padding: 0.3rem 0.5rem; font-size: 0.72rem; }
+
+  /* Hide multiplier bar column on small phones (saves width for essential columns) */
+  .multiplier-cell, .data-table th:has(span[data-sort-arrow]) { display: none; }
+  .table-section .table-header-row { flex-direction: column; gap: 0.5rem; }
 }
 
 /* ====================================================================
@@ -915,16 +1034,6 @@ p:last-child { margin-bottom: 0; }
 
 #presentation-overlay[hidden] {
   display: none !important;
-}
-
-/* ====================================================================
-   RESPONSIVE — new components
-   ==================================================================== */
-@media (max-width: 768px) {
-  .year-selector { flex-wrap: wrap; }
-  .callout-row { flex-direction: column; }
-  .callout { max-width: 100%; }
-  .chart-container-trend { height: 260px; }
 }
 
 /* ====================================================================

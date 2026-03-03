@@ -1490,6 +1490,16 @@ python pipeline/build_dataset.py</pre>
 }
 
 function bindControls() {
+  // Mobile controls toggle
+  const mobileToggle = document.getElementById("controls-mobile-toggle");
+  const controlsBody  = document.getElementById("controls-body");
+  if (mobileToggle && controlsBody) {
+    mobileToggle.addEventListener("click", () => {
+      const isOpen = controlsBody.classList.toggle("controls-open");
+      mobileToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+  }
+
   // Tax toggles
   document.querySelectorAll(".tax-toggle input").forEach(input => {
     input.addEventListener("change", () => {
