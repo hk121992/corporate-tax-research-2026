@@ -1,0 +1,15 @@
+Last updated: 2026-03-04
+Branch: claude/corporate-tax-research-1j5K0
+Status: Fully functional research tool. Onboarded into Middle Management.
+
+Completed this session:
+- Initial development: 5 years of data, 51 companies, 10+ interactive charts
+- Mobile optimisation: collapsible controls, compact layout, scrollable table
+- MM onboarding: CLAUDE.md, progress files, docs created
+
+Next:
+- Define Milestone 2 scope (PM to decide on next features)
+- Possible: more companies, international comparison, new tax types, data refresh
+
+Blockers / Decisions needed:
+- Milestone 2 scope not yet defined — awaiting PM direction

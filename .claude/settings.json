@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)",
+      "Bash(git push * --force *)",
+      "Bash(git reset --hard *)",
+      "Bash(sudo *)",
+      "Bash(chmod 777 *)",
+      "Bash(:(){ :|:& };:*)",
+      "Bash(mkfs*)",
+      "Bash(dd if=*)"
+    ]
+  }
+}
